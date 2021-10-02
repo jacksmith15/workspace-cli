@@ -10,6 +10,9 @@ homepage = "https://github.com/jacksmith15/workspaces"
 repository = "https://github.com/jacksmith15/workspaces"
 readme = "README.md"
 
+[tool.poetry.scripts]
+workspaces = "workspaces.__main__:run_cli"
+
 [tool.poetry.dependencies]
 python = "^3.8"
 click = "^8.0"

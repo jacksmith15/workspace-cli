@@ -534,10 +534,13 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[extras]
+pipenv = ["pipenv"]
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "2263e732a5227d70c71f4fbff18e74cc2a068ac0e243d5a50f29a23c61bb3b0f"
+content-hash = "564f7f9f52ca898a69607b029c9fa2c1ae73a7c355c7e43ad44fa1386a098fef"
 
 [metadata.files]
 appnope = [
