@@ -26,7 +26,7 @@ __all__ = [
 
 
 def get_adapter(name: str) -> Type[Adapter]:
-    adapters = _get_adapters()
+    adapters = get_adapters()
     try:
         return adapters[name]
     except KeyError:
@@ -35,7 +35,7 @@ def get_adapter(name: str) -> Type[Adapter]:
         )
 
 
-def _get_adapters() -> MappingProxyType:
+def get_adapters() -> MappingProxyType:
     return MappingProxyType(
         {
             subclass.name: subclass

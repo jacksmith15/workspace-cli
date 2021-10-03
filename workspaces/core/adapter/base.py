@@ -4,6 +4,8 @@ import subprocess
 from typing import TYPE_CHECKING, ClassVar, List, Optional, Set, Tuple
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     from workspaces.core.models import Workspace
 
 
@@ -40,4 +42,8 @@ class Adapter:
 
     def sync(self, include_dev: bool = True) -> subprocess.CompletedProcess:
         """Sync dependencies of the workspace."""
+        raise NotImplementedError
+
+    @classmethod
+    def new(cls, path: Path):
         raise NotImplementedError

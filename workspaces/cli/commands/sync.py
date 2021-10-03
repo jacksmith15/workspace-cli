@@ -14,8 +14,8 @@ from workspaces.core.models import WorkspacesProject
     nargs=-1,
 )
 @click.option(
-    "--dev",
-    "-d",
+    "--dev/--no-dev",
+    "-D/ ",
     type=bool,
     help="Include development dependencies.",
     default=False,
@@ -30,7 +30,7 @@ def sync(targets: Tuple[str, ...], dev: bool = False):
         target_set = set(project.workspaces)
 
     if not target_set:
-        click.echo(theme.attention("No workspaces selected."))
+        theme.echo("<w>No workspaces selected.</w>")
         sys.exit(0)
 
     exit_codes = {0}
@@ -39,6 +39,6 @@ def sync(targets: Tuple[str, ...], dev: bool = False):
 
     exit_code = sorted(exit_codes, key=lambda code: abs(code), reverse=True)[0]
     if exit_code != 0:
-        click.echo(theme.error("Some workspaces failed"))
+        theme.echo("<e>Some workspaces failed.</w>")
 
     sys.exit(exit_code)

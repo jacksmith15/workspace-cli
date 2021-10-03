@@ -30,7 +30,7 @@ def run(args: Tuple[str, ...], targets: str = None):
         target_set = set(project.workspaces)
 
     if not target_set:
-        click.echo(theme.attention("No workspaces selected."))
+        theme.echo("<w>No workspaces selected.</w>")
         sys.exit(0)
 
     exit_codes = {0}
@@ -39,12 +39,12 @@ def run(args: Tuple[str, ...], targets: str = None):
 
     exit_code = sorted(exit_codes, key=lambda code: abs(code), reverse=True)[0]
     if exit_code != 0:
-        click.echo(theme.error("Some workspaces failed"))
+        theme.echo("<e>Some workspaces failed.</e>")
 
     sys.exit(exit_code)
 
 
 def _run_in_workspace(workspace: Workspace, args: Tuple[str, ...]):
-    click.echo(theme.header(f"\nRunning '{' '.join(args)}' in '{workspace.resolved_path}'...\n"))
+    theme.echo(f"\n<h>Running <b>{' '.join(args)}</b> in <b>{workspace.resolved_path}</b>...</h>\n")
     result = workspace.adapter.run(list(args))
     return result.returncode

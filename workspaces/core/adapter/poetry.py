@@ -9,7 +9,7 @@ from poetry.core.pyproject.exceptions import PyProjectException
 from poetry.core.pyproject.toml import PyProjectTOML
 
 from workspaces.core.adapter.base import Adapter
-from workspaces.core.exceptions import WorkspaceImproperlyConfigured
+from workspaces.core.exceptions import WorkspaceImproperlyConfigured, WorkspacesError
 
 
 class PoetryAdapter(Adapter, name="poetry", command_prefix=("poetry", "run")):
@@ -70,3 +70,19 @@ class PoetryAdapter(Adapter, name="poetry", command_prefix=("poetry", "run")):
             check=False,
             cwd=self._workspace.resolved_path,
         )
+
+    @classmethod
+    def new(cls, path: Path):
+        try:
+            subprocess.run(
+                f"poetry new {path.resolve()}".split(" "),
+                capture_output=True,
+                check=True,
+            )
+        except subprocess.CalledProcessError as exc:
+            output = "\n  ".join([exc.stdout.decode().strip(), exc.stderr.decode().strip()]).strip()
+            raise WorkspacesError(
+                f"""Failed to initialise poetry workspace at {str(path)!r}:
+  {output}
+"""
+            )

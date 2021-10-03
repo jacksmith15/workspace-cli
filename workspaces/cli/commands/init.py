@@ -16,11 +16,11 @@ from workspaces.core.settings import get_settings
     default=None,
 )
 def init(path: Path = None):
-    """Begin tracking an existing Python project at PATH as a workspace."""
+    """Initialise a workspaces root project."""
     path = (path or Path.cwd()).resolve() / get_settings().project_filename
     if path.exists():
-        click.echo(theme.error(f"File already exists at '{path}'."))
+        theme.echo(f"<e>File already exists at <b>{path}</b></e>.")
         sys.exit(1)
-    click.echo(theme.header(f"Creating workspaces project at '{path}'..."))
     project = WorkspacesProject(path.parent, workspaces={})
     project.flush()
+    theme.echo(f"Created workspaces project at <a>{path}</a>.")

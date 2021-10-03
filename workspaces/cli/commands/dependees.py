@@ -15,7 +15,7 @@ from workspaces.core.models import WorkspacesProject
     "targets",
     nargs=-1,
 )
-@click.option("--no-transitive", type=bool, default=False, help="Only show direct dependees.")
+@click.option("--transitive/--no-transitive", type=bool, default=True, help="Only show direct dependees.")
 @click.option(
     "--output",
     "-o",
@@ -24,30 +24,24 @@ from workspaces.core.models import WorkspacesProject
     default="lines",
 )
 @click.option(
-    "--dev",
-    "-d",
+    "--dev/--no-dev",
+    "-d/ ",
     type=bool,
     help="Include development dependencies.",
     default=False,
 )
-def dependees(targets: Tuple[str, ...], no_transitive: bool = False, output: str = "lines", dev: bool = False):
+def dependees(targets: Tuple[str, ...], transitive: bool = True, output: str = "lines", dev: bool = False):
     """Runs command ARGS in each target workspace tracked by the current project."""
     project = WorkspacesProject.from_path()
 
     target_set = resolve_targets(project, targets)
 
-    unexpected = target_set - set(project.workspaces)
-    if unexpected:
-        unexpected_output = ", ".join((theme.error(name, accent=True) for name in unexpected))
-        click.echo(theme.error(f"Unknown workspace{'s' if len(unexpected) > 1 else ''}: {unexpected_output}"), err=True)
-        sys.exit(1)
-
     if not target_set:
-        click.echo(theme.attention("No workspaces selected."))
+        theme.echo("<w>No workspaces selected.</w>")
         sys.exit(0)
 
     # Get a full map of dependees:
-    dependee_map = _get_dependee_map(project, transitive=not no_transitive, include_dev=dev)
+    dependee_map = _get_dependee_map(project, transitive=transitive, include_dev=dev)
 
     # Extract the relevant dependees:
     dependees_set = {dependee for target in target_set for dependee in dependee_map[target]}
@@ -60,11 +54,11 @@ def dependees(targets: Tuple[str, ...], no_transitive: bool = False, output: str
     ]
 
     if output == "csv":
-        click.echo(theme.text(",".join(sorted_dependees)))
+        theme.echo(",".join(sorted_dependees), err=False)
         sys.exit(0)
 
     for dependee in sorted_dependees:
-        click.echo(theme.text(dependee))
+        theme.echo(dependee, err=False)
     sys.exit(0)
 
 

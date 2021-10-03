@@ -26,11 +26,11 @@ def reverse(paths: Tuple[Path, ...], output: str = "lines"):
 
     results: Set[str] = set(filter(None, (_reverse_path(project, path) for path in paths)))
     if output == "csv":
-        click.echo(theme.text(",".join(results)))
+        theme.echo(",".join(results), err=False)
         sys.exit(0)
 
     for result in results:
-        click.echo(theme.text(result))
+        theme.echo(result, err=False)
     sys.exit(0)
 
 

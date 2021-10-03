@@ -25,6 +25,7 @@ _PROJECT_CONFIG_SCHEMA = {
             },
         },
         "plugins": {"type": "array", "items": {"type": "string"}},
+        "template_path": {"type": "string"},
     },
 }
 
@@ -34,7 +35,7 @@ class WorkspacesProject:
     path: Path
     workspaces: Dict[str, Workspace]
     plugins: Optional[List[str]] = None
-    # templates
+    template_path: Optional[str] = None
 
     @classmethod
     def from_path(cls, path: Union[Path, str] = None) -> WorkspacesProject:
@@ -70,6 +71,8 @@ class WorkspacesProject:
         kwargs = {"path": path.parent, "workspaces": {}}
         if "plugins" in body:
             kwargs["plugins"] = body["plugins"]
+        if "template_path" in body:
+            kwargs["template_path"] = body["template_path"]
 
         project = cls(**kwargs)  # type: ignore[arg-type]
         for name, workspace in body.get("workspaces", {}).items():
@@ -101,6 +104,8 @@ class WorkspacesProject:
         }
         if self.plugins is not None:
             output["plugins"] = self.plugins
+        if self.template_path is not None:
+            output["template_path"] = self.template_path
         with open(self.path / get_settings().project_filename, "w", encoding="utf-8") as file:
             file.write(json.dumps(output, sort_keys=True, indent=2))
 

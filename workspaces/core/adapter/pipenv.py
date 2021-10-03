@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import subprocess
+import sys
 from pathlib import Path
 from typing import Set
 
@@ -8,7 +9,7 @@ import pipenv
 from pipfile import Pipfile
 
 from workspaces.core.adapter.base import Adapter
-from workspaces.core.exceptions import WorkspaceImproperlyConfigured
+from workspaces.core.exceptions import WorkspaceImproperlyConfigured, WorkspacesError
 
 assert pipenv  # please the linter - pipenv must be imported to access vendored pipfile.
 
@@ -59,3 +60,25 @@ class PipenvAdapter(Adapter, name="pipenv", command_prefix=("pipenv", "run")):
             check=False,
             cwd=self._workspace.resolved_path,
         )
+
+    @classmethod
+    def new(cls, path: Path):
+        try:
+            from cookiecutter.main import cookiecutter
+        except ImportError:
+            raise WorkspacesError("Cookiecutter is not installed - run 'pip install workspaces[cookiecutter]'.")
+        template_path = Path(__file__).parent.parent.parent / "templates/pipenv"
+        try:
+            version = sys.version_info
+            cookiecutter(
+                template=str(template_path),
+                output_dir=path.parent,
+                extra_context={"project_slug": path.name, "python_version": f"{version.major}.{version.minor}"},
+                no_input=True,
+            )
+        except Exception as exc:
+            raise WorkspaceImproperlyConfigured(
+                f"""Failed to initialise poetry workspace at {str(path)!r}:
+  {str(exc)}
+"""
+            )

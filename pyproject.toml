@@ -55,6 +55,8 @@ module = [
     "pipenv.*",
     "jsonschema.*",
     "pipfile.*",
+    "poetry.*",
+    "cookiecutter.*",
 
     # Test dependencies
     "invoke.*",
