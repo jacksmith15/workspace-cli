@@ -7,7 +7,7 @@ from functools import lru_cache
 
 @dataclass
 class Settings:
-    project_filename: str = ".workspaces"
+    project_filename: str = "workspaces.json"
 
     @classmethod
     def from_env(cls):

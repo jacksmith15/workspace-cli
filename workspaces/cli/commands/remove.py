@@ -1,38 +1,50 @@
 import shutil
 import sys
+from typing import Tuple
 
 import click
 
 from workspaces.cli import theme
+from workspaces.cli.utils import resolve_targets
 from workspaces.core.models import WorkspacesProject
 
 
 @click.command()
 @click.argument(
-    "name",
-    type=str,
+    "targets",
+    nargs=-1,
 )
 @click.option("--delete/--no-delete", "-d/ ", type=bool, default=False, help="Delete the workspace content too.")
-def remove(name: str, delete: bool = False):
-    """Remove workspace NAME from project."""
+def remove(targets: Tuple[str, ...], delete: bool = False):
+    """Remove workspace(s) from the project.
+
+    By default they will not be deleted.
+    """
     project = WorkspacesProject.from_path()
 
-    if name not in project.workspaces:
-        workspaces = "\n".join((f"  - <a>{name}</a>" for name in list(project.workspaces)[:10]))
-        theme.echo(
-            f"""<e>Unknown workspace <b>{name}</b>.</e>
+    target_set = resolve_targets(project, targets)
 
-Did you mean one of these?
-{workspaces}
+    if not target_set:
+        theme.echo("<w>No workspaces selected.</w>")
+        sys.exit(0)
+
+    for name in target_set:
+        resolved_path = project.workspaces[name].resolved_path
+        del project.workspaces[name]
+        project.flush()
+        if delete:
+            shutil.rmtree(resolved_path)
+
+    names = "\n".join(f"  - <b>{name}</b>" for name in target_set)
+    if delete:
+        theme.echo(
+            f"""<w>Deleted workspaces:</w>
+{names}
 """
         )
-        sys.exit(1)
-
-    resolved_path = project.workspaces[name].resolved_path
-    del project.workspaces[name]
-    project.flush()
-    if delete:
-        shutil.rmtree(resolved_path)
-        theme.echo(f"<w>Deleted workspace <b>{name}</b></w>.")
     else:
-        theme.echo(f"Stopped tracking workspace <a>{name}</a>.")
+        theme.echo(
+            f"""Stopped tracking workspaces:
+{names}
+"""
+        )

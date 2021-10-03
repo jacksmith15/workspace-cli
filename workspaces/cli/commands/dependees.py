@@ -31,7 +31,7 @@ from workspaces.core.models import WorkspacesProject
     default=False,
 )
 def dependees(targets: Tuple[str, ...], transitive: bool = True, output: str = "lines", dev: bool = False):
-    """Runs command ARGS in each target workspace tracked by the current project."""
+    """Get the set of workspaces which depend on the specified workspaces."""
     project = WorkspacesProject.from_path()
 
     target_set = resolve_targets(project, targets)
