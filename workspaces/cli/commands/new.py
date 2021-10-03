@@ -57,14 +57,17 @@ Specify a different name with:
         sys.exit(1)
 
     try:
-        _initialise_template(path=path.resolve(), type=type, template=template)
+        _initialise_template(project, path=path.resolve(), type=type, template=template)
         type = type or utils.detect_type(project, path.resolve())
         if not type:
             valid_type_list = "\n".join([f"  - <b>{name}</b>" for name in get_adapters()])
-            theme.echo(
-                f"""<e>Could not detect type of project at path <b>{path}</b>.</e>
+            raise WorkspacesCLIError(
+                f"""
+<e>Could not detect type of generated project.</e>
 
-Please specify type as follows:
+This is likely an issue with the template at <b>{project.templates[template]}</b>.
+
+You can specify the intended type for more detailed information:
 
     <a>workspaces add --type <b>TYPE</b> {path}</a>
 
@@ -72,7 +75,6 @@ Available types are:
 {valid_type_list}
 """
             )
-            sys.exit(1)
         workspace = project.set_workspace(
             name=name,
             path=str(Path.cwd().relative_to(project.path) / path),
@@ -89,13 +91,13 @@ Available types are:
         sys.exit(0)
 
 
-def _initialise_template(path: Path, type: str = None, template: str = None):
+def _initialise_template(project: WorkspacesProject, path: Path, type: str = None, template: str = None):
     """Initialise the workspace directory."""
     if template:
-        raise NotImplementedError("Template support is not yet available.")
+        project.templates.create(template, path)
     else:
         if not type:
-            raise WorkspacesCLIError("<e>Must specify <b>--type</b>, <b>--template</b>, or both.</e>")
+            raise WorkspacesCLIError("<e>Must specify at least one of <b>--type</b> and <b>--template</b> options.</e>")
         adapter = get_adapter(type)
         try:
             adapter.new(path)

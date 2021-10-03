@@ -11,6 +11,7 @@ import jsonschema
 from workspaces.core.adapter import Adapter, get_adapter
 from workspaces.core.exceptions import WorkspacesError
 from workspaces.core.settings import get_settings
+from workspaces.core.templates import Templates
 
 _PROJECT_CONFIG_SCHEMA = {
     "type": "object",
@@ -79,6 +80,10 @@ class WorkspacesProject:
             project.set_workspace(name, **workspace)
         project._load_plugins()
         return project
+
+    @property
+    def templates(self):
+        return Templates(self)
 
     def get_workspace_by_path(self, path: Path) -> Optional[Workspace]:
         path = path.resolve()
