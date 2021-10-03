@@ -45,6 +45,6 @@ def run(args: Tuple[str, ...], targets: str = None):
 
 
 def _run_in_workspace(workspace: Workspace, args: Tuple[str, ...]):
-    theme.echo(f"\n<h>Running <b>{' '.join(args)}</b> in <b>{workspace.resolved_path}</b>...</h>\n")
+    theme.echo(f"\n<h>Running <b>{' '.join(args)}</b> in <b>{workspace.path}</b>...</h>\n")
     result = workspace.adapter.run(list(args))
     return result.returncode

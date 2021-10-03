@@ -63,6 +63,10 @@ module = [
 ]
 ignore_missing_imports = true
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_functions = ["should_*", "test_*"]
+
 [tool.isort]
 # Setting compatible with black. See https://black.readthedocs.io/en/stable/compatible_configs.html
 multi_line_output = 3
