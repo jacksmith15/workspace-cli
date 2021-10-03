@@ -18,6 +18,8 @@ python = "^3.8"
 click = "^8.0"
 jsonschema = "^4.0.1"
 pipenv = {version = "^2021.5.29", optional = true}
+poetry = {version= ">=1.1.8,<1.2.0", optional=true}
+cookiecutter = {version = "^1.7.3", optional = true}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.3"
@@ -35,6 +37,8 @@ types-toml = "*"
 
 [tool.poetry.extras]
 pipenv = ["pipenv"]
+poetry = ["poetry"]
+cookiecutter = ["cookiecutter"]
 
 [tool.mypy]
 show_column_numbers = true

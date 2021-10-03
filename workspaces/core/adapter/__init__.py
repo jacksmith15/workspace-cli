@@ -11,6 +11,13 @@ try:
 except ImportError:
     pass
 
+try:
+    from workspaces.core.adapter.poetry import PoetryAdapter
+
+    assert PoetryAdapter
+except ImportError:
+    pass
+
 
 __all__ = [
     "Adapter",
