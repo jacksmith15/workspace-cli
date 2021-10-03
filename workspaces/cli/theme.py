@@ -15,7 +15,7 @@ def text(string: str) -> str:
 
 
 def header(string: str) -> str:
-    return click.style(string, fg=Palette.green)  # type: ignore[arg-type]
+    return click.style(string, fg=Palette.green)
 
 
 def accent(string: str, level: int = 0) -> str:
@@ -27,17 +27,17 @@ def accent(string: str, level: int = 0) -> str:
         0: Palette.turquoise,
         1: Palette.purple,
     }[level]
-    return click.style(string, fg=color)  # type: ignore[arg-type]
+    return click.style(string, fg=color)
 
 
 def attention(string: str) -> str:
     """Use to call attention of the user, e.g. a warning."""
-    return click.style(string, fg=Palette.yellow)  # type: ignore[arg-type]
+    return click.style(string, fg=Palette.yellow)
 
 
 def error(string: str, accent: bool = False) -> str:
     """Indicate to the user that something is wrong."""
-    return click.style(string, fg=Palette.red, bold=accent)  # type: ignore[arg-type]
+    return click.style(string, fg=Palette.red, bold=accent)
 
 
 def demo_theme():

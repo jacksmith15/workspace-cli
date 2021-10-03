@@ -24,15 +24,38 @@ pytest = "^6.2.3"
 toml = "^0.10"
 ipdb = "^0.13.7"
 ipython = "^7.22.0"
-mypy = "^0.812"
+mypy = "^0.910"
 pyflakes = "^2.3.1"
 invoke = "^1.5.0"
 termcolor = "^1.1.0"
 pytest-cov = "^2.11.1"
 changelog-cmd = "^0.2.0"
+types-termcolor = "*"
+types-toml = "*"
 
 [tool.poetry.extras]
 pipenv = ["pipenv"]
+
+[tool.mypy]
+show_column_numbers = true
+show_error_codes = true
+color_output = true
+warn_unused_configs = true
+warn_unused_ignores = true
+follow_imports = "normal"
+exclude = "\\{.*"
+
+[[tool.mypy.overrides]]
+module = [
+    # Source code dependencies
+    "pipenv.*",
+    "jsonschema.*",
+    "pipfile.*",
+
+    # Test dependencies
+    "invoke.*",
+]
+ignore_missing_imports = true
 
 [tool.isort]
 # Setting compatible with black. See https://black.readthedocs.io/en/stable/compatible_configs.html
