@@ -9,14 +9,14 @@ try:
 
     assert PipenvAdapter
 except ImportError:
-    pass
+    pass  # pragma: no cover
 
 try:
     from workspaces.core.adapter.poetry import PoetryAdapter
 
     assert PoetryAdapter
 except ImportError:
-    pass
+    pass  # pragma: no cover
 
 
 __all__ = [

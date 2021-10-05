@@ -34,15 +34,15 @@ class Adapter:
 
     def dependencies(self, include_dev: bool = True) -> Set[str]:
         """Return the names of workspaces this workspace depends on."""
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover
 
     def validate(self):
         """Validate the workspace."""
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover
 
     def sync(self, include_dev: bool = True) -> subprocess.CompletedProcess:
         """Sync dependencies of the workspace."""
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover
 
     @classmethod
     def new(cls, path: Path):

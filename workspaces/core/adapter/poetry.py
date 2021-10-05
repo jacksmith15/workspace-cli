@@ -86,3 +86,10 @@ class PoetryAdapter(Adapter, name="poetry", command_prefix=("poetry", "run")):
   {output}
 """
             )
+        with open(path / "poetry.toml", "w", encoding="utf-8") as file:
+            file.write(
+                """[virtualenvs]
+create = true
+in-project = true
+"""
+            )

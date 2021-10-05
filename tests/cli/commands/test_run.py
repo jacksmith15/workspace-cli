@@ -6,9 +6,9 @@ import pytest
 from tests.cli.commands.helpers import PROJECT_ROOT, run
 
 
-class TestWorkspaceRun:
+class TestWorkspacesRun:
     @staticmethod
-    def should_show_nothing_when_no_workspaces_are_configured():
+    def should_do_nothing_when_no_workspaces_are_configured():
         # GIVEN I have no workspaces configured
         # WHEN I workspace run a command
         result = run(["workspaces", "run", "pwd"])
@@ -24,8 +24,8 @@ class TestWorkspaceRun:
         # WHEN I workspace run a command with no option
         result = run(["workspaces", "run", "pwd"])
         # THEN I should get the expected result
-        output = {str(Path(line).relative_to(PROJECT_ROOT)) for line in result.stdout.decode().strip().splitlines()}
-        assert output == paths
+        output = set(result.stdout.decode().strip().splitlines())
+        assert {str(PROJECT_ROOT / path) for path in paths} <= output
 
     @staticmethod
     def should_run_on_targets_only():
@@ -42,11 +42,28 @@ class TestWorkspaceRun:
                 f"--targets={','.join([path.split('/')[-1] for path in target_paths])}",
                 "--",
                 "pwd",
-            ]
+            ],
+            assert_success=True,
         )
         # THEN I should get the expected result
-        output = {str(Path(line).relative_to(PROJECT_ROOT)) for line in result.stdout.decode().strip().splitlines()}
-        assert output == target_paths
+        output = set(result.stdout.decode().strip().splitlines())
+        assert {str(PROJECT_ROOT / path) for path in target_paths} <= output
+
+    @staticmethod
+    def should_run_on_globbed_targets():
+        # GIVEN I have workspaces with a common prefix
+        library_paths = {"libs/library-one", "libs/library-two"}
+        for path in library_paths:
+            run(["workspaces", "new", "--type", "poetry", path])
+        # AND other workspaces with a different prefix
+        application_path = "apps/application-one"
+        run(["workspaces", "new", "--type", "poetry", application_path])
+        # WHEN I workspace run a command using a glob to select the common prefix
+        result = run(["workspaces", "run", "--targets=library-*", "--", "pwd"])
+        # THEN I the command should run in the matching workspaces
+        output = set(result.stdout.decode().strip().splitlines())
+        assert {str(PROJECT_ROOT / path) for path in library_paths} <= output
+        assert str(PROJECT_ROOT / application_path) not in output
 
     @staticmethod
     def should_fail_if_command_fails():
@@ -57,7 +74,7 @@ class TestWorkspaceRun:
         # WHEN I run a command with exit code 2 in the first workspace
         Path(PROJECT_ROOT / "libs/library-two" / "foo").touch()
         with pytest.raises(subprocess.CalledProcessError) as exc_info:
-            run(["workspaces", "run", "ls", "foo"])
+            run(["workspaces", "run", "ls", "foo"], assert_success=False)
         exc = exc_info.value
         # THEN the exit code is 2
         assert exc.returncode == 2

@@ -12,6 +12,7 @@ from workspaces.cli.commands.remove import remove
 from workspaces.cli.commands.reverse import reverse
 from workspaces.cli.commands.run import run
 from workspaces.cli.commands.sync import sync
+from workspaces.cli.commands.template import template
 from workspaces.cli.exceptions import WorkspacesCLIError
 from workspaces.core.exceptions import WorkspacesError
 
@@ -22,7 +23,7 @@ def cli():
     pass
 
 
-for command in (add, dependees, init, list_, new, remove, reverse, run, sync):
+for command in (add, dependees, init, list_, new, remove, reverse, run, sync, template):
     cli.add_command(command)
 
 

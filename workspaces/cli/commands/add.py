@@ -35,7 +35,7 @@ Specify a different name with:
 
     existing = project.get_workspace_by_path(path)
     if existing:
-        theme.echo(f"<e>Path <b>{path}</b> already tracked as workspace <b>{existing}</b>.</e>")
+        theme.echo(f"<e>Path <b>{path}</b> already tracked as workspace <b>{existing.name}</b>.</e>")
         sys.exit(1)
 
     type = type or utils.detect_type(project, path)

@@ -30,7 +30,7 @@ def new(path: Path, type: str = None, name: str = None, template: str = None):
 
     existing = project.get_workspace_by_path(path)
     if existing:
-        theme.echo(f"<e>Path <b>{path}</b> already tracked as workspace <b>{existing}</b>.</e>")
+        theme.echo(f"<e>Path <b>{path}</b> already tracked as workspace <b>{existing.name}</b>.</e>")
         sys.exit(1)
 
     name = name or path.name

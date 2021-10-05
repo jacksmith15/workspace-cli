@@ -1,7 +1,7 @@
 from tests.cli.commands.helpers import run
 
 
-class TestWorkspaceDependees:
+class TestWorkspacesDependees:
     @staticmethod
     def should_identify_direct_dependees():
         # GIVEN I have three workspaces

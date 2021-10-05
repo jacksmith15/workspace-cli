@@ -4,7 +4,7 @@ import re
 from collections import OrderedDict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, Iterator, List, Set
 
 from workspaces.core.exceptions import WorkspacesError
 
@@ -20,7 +20,16 @@ class Templates:
     def template_paths(self) -> List[Path]:
         if not self.project.template_path:
             return []
-        return [self.project.path / Path(path) for path in self.project.template_path.split(":")]
+        return [self.project.path / Path(path) for path in self.project.template_path]
+
+    def __iter__(self) -> Iterator[Path]:
+        seen: Set[Path] = set()
+        for template_path in self.template_paths:
+            for path in template_path.glob("*/cookiecutter.json"):
+                if path in seen:
+                    continue
+                seen.add(path.parent)
+                yield path.parent
 
     def __getitem__(self, template_name: str) -> Path:
         for path in self.template_paths:

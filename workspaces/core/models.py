@@ -26,7 +26,7 @@ _PROJECT_CONFIG_SCHEMA = {
             },
         },
         "plugins": {"type": "array", "items": {"type": "string"}},
-        "template_path": {"type": "string"},
+        "template_path": {"type": "array", "items": {"type": "string"}},
     },
 }
 
@@ -36,7 +36,7 @@ class WorkspacesProject:
     path: Path
     workspaces: Dict[str, Workspace]
     plugins: Optional[List[str]] = None
-    template_path: Optional[str] = None
+    template_path: Optional[List[str]] = None
 
     @classmethod
     def from_path(cls, path: Union[Path, str] = None) -> WorkspacesProject:
