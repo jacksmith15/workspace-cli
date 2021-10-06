@@ -12,12 +12,20 @@ from workspaces.core.settings import get_settings
 def setup_root_project():
     if not PROJECT_ROOT.exists():
         os.mkdir(PROJECT_ROOT)
+    existing = set(PROJECT_ROOT.glob("**/*"))
     try:
         run(["workspaces", "init", "--path", PROJECT_ROOT])
         assert (PROJECT_ROOT / get_settings().project_filename).exists()
         yield
     finally:
-        shutil.rmtree(PROJECT_ROOT)
+        for path in PROJECT_ROOT.glob("**/*"):
+            if path not in existing:
+                if not path.exists():
+                    continue
+                if path.is_dir():
+                    shutil.rmtree(path)
+                else:
+                    path.unlink()
 
 
 @pytest.fixture(autouse=True)
@@ -36,3 +44,22 @@ def _unset_virtual_env():
             os.environ["VIRTUAL_ENV"] = original
     else:
         yield
+
+
+@pytest.fixture(autouse=True)
+def _set_python_path():
+    """Set the pythonpath to project root.
+
+    This allows subprocess CLI calls to detect plugins, if configured.
+    """
+    PYTHONPATH = "PYTHONPATH"
+    original = os.environ.get(PYTHONPATH, None)
+    try:
+        os.environ[PYTHONPATH] = str(PROJECT_ROOT)
+        yield
+    finally:
+        if original:
+            os.environ[PYTHONPATH] = original
+        else:
+            if PYTHONPATH in os.environ:
+                del os.environ[PYTHONPATH]

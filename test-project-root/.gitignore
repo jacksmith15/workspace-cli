@@ -1,0 +1,6 @@
+*
+!.gitignore
+!/templates
+!/templates/**/*
+!/plugins
+!/plugins/**/*

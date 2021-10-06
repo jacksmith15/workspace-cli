@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Iterator, List, Set
 from workspaces.core.exceptions import WorkspacesError
 
 if TYPE_CHECKING:
-    from workspaces.core.models import WorkspacesProject
+    from workspaces.core.models import WorkspacesProject  # pragma: no cover
 
 
 @dataclass
@@ -23,12 +23,12 @@ class Templates:
         return [self.project.path / Path(path) for path in self.project.template_path]
 
     def __iter__(self) -> Iterator[Path]:
-        seen: Set[Path] = set()
+        seen: Set[str] = set()
         for template_path in self.template_paths:
             for path in template_path.glob("*/cookiecutter.json"):
-                if path in seen:
+                if path.parent.name in seen:
                     continue
-                seen.add(path.parent)
+                seen.add(path.parent.name)
                 yield path.parent
 
     def __getitem__(self, template_name: str) -> Path:
@@ -37,6 +37,13 @@ class Templates:
             if target.exists() and target.is_file():
                 return target.parent
         raise KeyError(template_name)
+
+    def __contains__(self, template_name: str) -> bool:
+        try:
+            self[template_name]
+            return True
+        except KeyError:
+            return False
 
     def create(self, template_name: str, path: Path):
         try:

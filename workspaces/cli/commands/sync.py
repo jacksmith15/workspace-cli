@@ -21,7 +21,7 @@ from workspaces.core.models import WorkspacesProject
     default=False,
 )
 def sync(targets: Tuple[str, ...], dev: bool = False):
-    """Runs command ARGS in each target workspace tracked by the current project."""
+    """Sync environment of target workspaces."""
     project = WorkspacesProject.from_path()
 
     if targets:

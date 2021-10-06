@@ -26,6 +26,10 @@ from workspaces.core.models import WorkspacesProject
     help="Specify a template to use. Must be discoverable on the template path. Optional if `type` is specified, and the type provides a default template.",
 )
 def new(path: Path, type: str = None, name: str = None, template: str = None):
+    """Create a new workspace from scratch.
+
+    Either specify a template to use, or specify the type to use the default template.
+    """
     project = WorkspacesProject.from_path()
 
     existing = project.get_workspace_by_path(path)
@@ -55,6 +59,17 @@ Specify a different name with:
 """
         )
         sys.exit(1)
+
+    if template and template not in project.templates:
+        template_list = "\n".join([f"  - <a>{path.name}</a>" for path in project.templates])
+        raise WorkspacesCLIError(
+            f"""<e>Unknown template <b>{template}</b>.</e>.
+
+Available templates are:
+{template_list}
+
+"""
+        )
 
     try:
         _initialise_template(project, path=path.resolve(), type=type, template=template)

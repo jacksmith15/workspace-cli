@@ -21,7 +21,7 @@ from workspaces.core.models import Workspace, WorkspacesProject
     help="Comma-separated list of target workspaces by name. Omit to run the command in all tracked workspaces.",
 )
 def run(args: Tuple[str, ...], targets: str = None):
-    """Runs command ARGS in each target workspace tracked by the current project."""
+    """Run a command in each target workspace."""
     project = WorkspacesProject.from_path()
 
     if targets:

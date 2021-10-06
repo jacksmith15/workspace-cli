@@ -108,4 +108,4 @@ Let's draw attention to the <s>good</s> things.
 <e>Something here has gone <b>very wrong</b>!</e>
 
 """
-    )
+    )  # pragma: no cover

@@ -6,6 +6,7 @@ from workspaces.cli.commands.template.path import path
 
 @click.group()
 def template():
+    """Commands for managing project templates."""
     pass
 
 

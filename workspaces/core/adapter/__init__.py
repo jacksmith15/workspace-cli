@@ -8,14 +8,14 @@ try:
     from workspaces.core.adapter.pipenv import PipenvAdapter
 
     assert PipenvAdapter
-except ImportError:
+except ImportError:  # pragma: no cover
     pass  # pragma: no cover
 
 try:
     from workspaces.core.adapter.poetry import PoetryAdapter
 
     assert PoetryAdapter
-except ImportError:
+except ImportError:  # pragma: no cover
     pass  # pragma: no cover
 
 

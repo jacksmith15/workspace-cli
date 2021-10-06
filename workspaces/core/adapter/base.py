@@ -4,9 +4,9 @@ import subprocess
 from typing import TYPE_CHECKING, ClassVar, List, Optional, Set, Tuple
 
 if TYPE_CHECKING:
-    from pathlib import Path
+    from pathlib import Path  # pragma: no cover
 
-    from workspaces.core.models import Workspace
+    from workspaces.core.models import Workspace  # pragma: no cover
 
 
 class Adapter:

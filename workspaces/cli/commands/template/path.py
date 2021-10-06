@@ -24,9 +24,10 @@ def path(action: str, path: Path):
     if not project.template_path:
         project.template_path = []
 
+    # TODO: it might be good to print the templates added and removed.
     if action == "add":
         if str(path) in project.template_path:
-            theme.echo(f"Already configured to detect templates at <a>{path}</a>.")
+            theme.echo(f"<e>Already configured to detect templates at <b>{path}</b>.</e>")
             sys.exit(1)
         project.template_path.append(str(path))
         project.flush()
@@ -34,7 +35,7 @@ def path(action: str, path: Path):
         sys.exit(0)
 
     if str(path) not in project.template_path:
-        theme.echo(f"Not configured to detect templates at <a>{path}</a>.")
+        theme.echo(f"<e>Not configured to detect templates at <b>{path}</b>.</e>")
         sys.exit(1)
 
     project.template_path.remove(str(path))
