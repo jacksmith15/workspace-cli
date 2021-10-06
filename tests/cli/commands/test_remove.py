@@ -1,7 +1,7 @@
 from tests.cli.commands.helpers import PROJECT_ROOT, run
 
 
-class TestWorkspacesRemove:
+class TestRemove:
     @staticmethod
     def should_remove_specified_workspace():
         # GIVEN a workspace is being tracked

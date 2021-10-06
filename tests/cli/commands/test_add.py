@@ -6,7 +6,7 @@ import pytest
 from tests.cli.commands.helpers import PROJECT_ROOT, run
 
 
-class TestWorkspacesAdd:
+class TestAdd:
     @staticmethod
     def should_add_new_workspace_from_given_path():
         # GIVEN a poetry project exists at a given path

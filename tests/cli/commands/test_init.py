@@ -6,7 +6,7 @@ from tests.cli.commands.helpers import PROJECT_ROOT, run
 from workspaces.core.models import WorkspacesProject
 
 
-class TestWorkspacesInit:
+class TestInit:
     @staticmethod
     def should_create_workspaces_file():
         # WHEN I run workspaces init

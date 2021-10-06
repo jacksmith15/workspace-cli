@@ -5,7 +5,7 @@ import pytest
 from tests.cli.commands.helpers import run
 
 
-class TestWorkspacesTemplatePathAdd:
+class TestTemplatePathAdd:
     @staticmethod
     def should_add_a_new_template_path():
         # GIVEN I have a directory containing templates
@@ -30,7 +30,7 @@ class TestWorkspacesTemplatePathAdd:
         assert exc.text.startswith(f"Already configured to detect templates at {template_path}.")
 
 
-class TestWorkspacesTemplatePathRemove:
+class TestTemplatePathRemove:
     @staticmethod
     def should_fail_if_path_not_tracked():
         # GIVEN I have a directory containing templates which is not on the path
@@ -55,7 +55,7 @@ class TestWorkspacesTemplatePathRemove:
         assert result.text.startswith(f"Stopped detecting templates at {template_path}.")
 
 
-class TestWorkspacesTemplateList:
+class TestTemplateList:
     @staticmethod
     def should_show_nothing_when_template_path_not_set():
         # WHEN I run template list

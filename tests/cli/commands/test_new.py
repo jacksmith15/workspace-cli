@@ -7,7 +7,7 @@ from tests.cli.commands.helpers import PROJECT_ROOT, run
 from workspaces.core.models import WorkspacesProject
 
 
-class TestWorkspacesNew:
+class TestNew:
     @staticmethod
     def should_create_new_poetry_workspace_at_given_path():
         # WHEN I create a new workspace at a given path

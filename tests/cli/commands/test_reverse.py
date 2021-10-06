@@ -3,7 +3,7 @@ import pytest
 from tests.cli.commands.helpers import run
 
 
-class TestWorkspacesReverse:
+class TestReverse:
     @staticmethod
     def should_show_nothing_when_no_paths_are_provided():
         # GIVEN I have a workspace

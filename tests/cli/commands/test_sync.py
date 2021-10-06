@@ -1,7 +1,7 @@
 from tests.cli.commands.helpers import PROJECT_ROOT, run
 
 
-class TestWorkspacesSync:
+class TestSync:
     @staticmethod
     def should_nothing_when_no_workspaces_are_configured():
         # GIVEN I have no workspaces configured
