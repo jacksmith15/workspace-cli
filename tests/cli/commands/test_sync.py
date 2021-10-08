@@ -3,7 +3,7 @@ from tests.cli.commands.helpers import PROJECT_ROOT, run
 
 class TestSync:
     @staticmethod
-    def should_nothing_when_no_workspaces_are_configured():
+    def should_do_nothing_when_no_workspaces_are_configured():
         # GIVEN I have no workspaces configured
         # WHEN I workspace run a command
         result = run(["workspaces", "sync"])
