@@ -4,12 +4,17 @@ from typing import Optional, Set, Tuple
 
 import click
 
-from workspaces.cli import theme
+from workspaces.cli import callbacks, theme
 from workspaces.core.models import WorkspacesProject
 
 
 @click.command()
-@click.argument("paths", nargs=-1, type=click.Path(exists=False, file_okay=True, dir_okay=True, path_type=Path))
+@click.argument(
+    "paths",
+    nargs=-1,
+    callback=callbacks.consume_stdin,
+    type=click.Path(exists=False, file_okay=True, dir_okay=True, path_type=Path),
+)
 @click.option(
     "--output",
     "-o",

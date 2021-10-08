@@ -9,6 +9,7 @@ from workspaces.core.models import Workspace, WorkspacesProject
 def resolve_targets(project: WorkspacesProject, targets: Iterable[str]) -> Set[str]:
     result = set()
     for target in targets:
+        target = target.strip()
         for workspace in project.workspaces:
             if workspace in result:
                 continue

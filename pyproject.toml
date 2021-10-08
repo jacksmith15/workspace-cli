@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "workspaces"
 version = "0.1.0"
-description = ""
+description = "Manage interdependent projects as workspaces."
 authors = ["Jack Smith"]
 packages = [
     {include = "workspaces"},

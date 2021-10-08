@@ -3,7 +3,7 @@ from typing import Tuple
 
 import click
 
-from workspaces.cli import theme
+from workspaces.cli import callbacks, theme
 from workspaces.cli.utils import resolve_targets
 from workspaces.core.models import WorkspacesProject
 
@@ -12,6 +12,7 @@ from workspaces.core.models import WorkspacesProject
 @click.argument(
     "targets",
     nargs=-1,
+    callback=callbacks.consume_stdin,
 )
 @click.option(
     "--dev/--no-dev",
