@@ -5,6 +5,7 @@ import click
 
 _BOLD = "\x1b[1m"
 _RESET = "\x1b[0m"
+_CLEAR = "\x1b[1K\r"
 
 
 class Colors:
@@ -16,8 +17,11 @@ class Colors:
     red = 167
 
 
-def echo(message=None, file=None, nl=True, err=True, color=None):
-    click.echo(message=colorize(message), file=file, nl=nl, err=err, color=color)
+def echo(message=None, file=None, nl=True, err=True, color=None, rewrite=False):
+    message = colorize(message)
+    if rewrite:
+        message = _CLEAR + message
+    click.echo(message=message, file=file, nl=nl, err=err, color=color)
 
 
 def colorize(message: str) -> str:

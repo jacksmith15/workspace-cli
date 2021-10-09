@@ -131,7 +131,7 @@ Expand the following to see an example plugin for Python projects using `require
 import os
 import shlex
 import subprocess
-from typing import Set
+from typing import Set, Tuple
 
 import requirements
 from workspaces.core.adapter import Adapter
@@ -142,20 +142,17 @@ class RequirementsTXTAdapter(Adapter, name="requirementstxt"):
         """Attempt to parse the requirements."""
         _ = self._requirements
 
-    def run(self, command: str, capture_output: bool = False, check: bool = False) -> subprocess.CompletedProcess:
-        """Run a command in the workspace."""
+    def run_args(self, command: str) -> Tuple[str, dict]:
+        """Get modified command and kwargs that should be used when running inside the workspace."""
+        command, kwargs = super().run_args(command)
+
         venv_path = self._ensure_virtualenv()
         env = os.environ.copy()
         env["VIRTUAL_ENV"] = str(venv_path)
         env["PATH"] = f"{venv_path/'bin'}:{env['PATH']}"
-        return subprocess.run(
-            command,
-            capture_output=capture_output,
-            check=check,
-            cwd=self._workspace.resolved_path,
-            shell=True,
-            env=env,
-        )
+        kwargs["env"] = env
+
+        return command, kwargs
 
     def sync(self, include_dev: bool = True) -> subprocess.CompletedProcess:
         """Sync dependencies of the workspace."""

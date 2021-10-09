@@ -26,15 +26,38 @@ class Adapter:
 
     def run(self, command: str, capture_output: bool = False, check: bool = False) -> subprocess.CompletedProcess:
         """Run a command within the workspace."""
+        with self.popen(command, capture_output=capture_output) as process:
+            try:
+                stdout, stderr = process.communicate()
+            except:
+                process.kill()
+                raise
+            returncode = process.returncode
+        result: subprocess.CompletedProcess = subprocess.CompletedProcess(
+            command,
+            returncode=returncode,
+            stdout=stdout,
+            stderr=stderr,
+        )
+        if check:
+            result.check_returncode()
+        return result
+
+    def popen(self, command: str, capture_output: bool = True) -> subprocess.Popen:
+        """Open a subprocess and return it."""
+        command, kwargs = self.run_args(command)
+        if capture_output:
+            kwargs.update(stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        return subprocess.Popen(command, **kwargs)
+
+    def run_args(self, command: str) -> Tuple[str, dict]:
+        """Get modified command and kwargs that should be used when running inside the workspace.
+
+        These arguments are passed directly to subprocess.Popen.
+        """
         # We don't do shlex.join(prefix + shlex.split(command)) because this will escape e.g. |
         command = " ".join([shlex.join(self.command_prefix), command])
-        return subprocess.run(
-            command,
-            capture_output=capture_output,
-            check=check,
-            cwd=self._workspace.resolved_path,
-            shell=True,
-        )
+        return command, dict(cwd=self._workspace.resolved_path, shell=True)
 
     def dependencies(self, include_dev: bool = True) -> Set[str]:
         """Return the names of workspaces this workspace depends on."""
