@@ -80,6 +80,131 @@ Combining `run`, `dependees` and `reverse`, you can test affected workspaces bas
 git --no-pager diff --name-only | workspaces reverse | workspaces dependees | workspaces run -c 'pytest'
 ```
 
+### Templates
+
+The CLI has in-built support for using custom [cookiecutter templates](https://github.com/cookiecutter/cookiecutter) on workspaces in your project.
+
+You can specify a path to your templates using:
+
+```bash
+workspaces template path add templates/
+```
+
+Given the `templates/` directory contains these templates:
+
+```
+PROJECT_ROOT/
+    templates/
+        library-template/
+        application-template/
+    workspaces.json
+```
+
+You can inspect the available templates with:
+
+```bash
+workspaces template list
+# library-template
+# application-template
+```
+
+And use a template to create a new workspace with:
+
+```bash
+workspaces new --template library-template libs/my-new-library
+```
+
+> :information_source: Ensure cookiecutter is installed with `pip install workspaces-cli[cookiecutter]`.
+
+
+### Plugins
+
+By default, `workspaces` supports two types of workspace: `poetry` and `pipenv`. New types can be registered by enabling plugins which contain _adapters_ for those new types.
+
+A plugin is simply a Python module containing one or more subclasses of `workspaces.core.adapter.Adapter`, which implement its abstract methods.
+
+Expand the following to see an example plugin for Python projects using `requirements.txt` files:
+
+<details><summary>plugins/requirementstxt.py</summary>
+
+```python
+import os
+import shlex
+import subprocess
+from typing import Set
+
+import requirements
+from workspaces.core.adapter import Adapter
+
+
+class RequirementsTXTAdapter(Adapter, name="requirementstxt"):
+    def validate(self):
+        """Attempt to parse the requirements."""
+        _ = self._requirements
+
+    def run(self, command: str, capture_output: bool = False, check: bool = False) -> subprocess.CompletedProcess:
+        """Run a command in the workspace."""
+        venv_path = self._ensure_virtualenv()
+        env = os.environ.copy()
+        env["VIRTUAL_ENV"] = str(venv_path)
+        env["PATH"] = f"{venv_path/'bin'}:{env['PATH']}"
+        return subprocess.run(
+            command,
+            capture_output=capture_output,
+            check=check,
+            cwd=self._workspace.resolved_path,
+            shell=True,
+            env=env,
+        )
+
+    def sync(self, include_dev: bool = True) -> subprocess.CompletedProcess:
+        """Sync dependencies of the workspace."""
+        command = ["pip", "install", "-r", "requirements.txt"]
+        if include_dev:
+            command.extend(["-r", "requirements-dev.txt"])
+        return self.run(shlex.join(command))
+
+    def dependencies(self, include_dev: bool = True) -> Set[str]:
+        """Get other workspaces this workspace depends upon."""
+        deps = self._requirements["default"]
+        if include_dev:
+            deps.extend(self._requirements["dev"])
+        results = set()
+        for dep in deps:
+            if dep.editable:
+                path = (self._workspace.resolved_path / dep.path).resolve()
+                workspace = self._workspace.root.get_workspace_by_path(path)
+                if workspace:
+                    results.add(workspace.name)
+        return results
+
+    @property
+    def _requirements(self):
+        """Parse the requirements files."""
+        return {
+            "default": list(requirements.parse((self._workspace.resolved_path / "requirements.txt").read_text())),
+            "dev": list(requirements.parse((self._workspace.resolved_path / "requirements-dev.txt").read_text())),
+        }
+
+    def _ensure_virtualenv(self):
+        """Ensure virtualenv exists."""
+        venv_path = self._workspace.resolved_path / ".venv"
+        if not (venv_path / "bin/python").exists():
+            subprocess.run(["python", "-m", "venv", venv_path], check=True)
+        return venv_path
+```
+
+</details>
+
+Given such a plugin is available on your `PYTHONPATH`, you can enable it using
+
+```bash
+workspaces plugin add plugins.requirementstxt
+```
+
+You are then able to add projects of this type by specifying `--type requirementstxt`.
+
+
 ## Development
 
 Install dependencies:
