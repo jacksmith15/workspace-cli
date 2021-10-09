@@ -210,7 +210,7 @@ You are then able to add projects of this type by specifying `--type requirement
 Install dependencies:
 
 ```shell
-pyenv shell 3.9.4  # Or other version >= 3.8
+pyenv shell 3.8.6  # Or other version >= 3.8
 pre-commit install  # Configure commit hooks
 poetry install  # Install Python dependencies
 ```
