@@ -24,7 +24,7 @@ class TestRun:
         # WHEN I workspace run a command with no option
         result = run(["workspaces", "run", "pwd"])
         # THEN I should get the expected result
-        output = set(result.stdout.decode().strip().splitlines())
+        output = set(result.stdout.strip().splitlines())
         assert {str(PROJECT_ROOT / path) for path in paths} <= output
 
     @staticmethod
@@ -46,7 +46,7 @@ class TestRun:
             assert_success=True,
         )
         # THEN I should get the expected result
-        output = set(result.stdout.decode().strip().splitlines())
+        output = set(result.stdout.strip().splitlines())
         assert {str(PROJECT_ROOT / path) for path in target_paths} <= output
 
     @staticmethod
@@ -61,7 +61,7 @@ class TestRun:
         # WHEN I workspace run a command using a glob to select the common prefix
         result = run(["workspaces", "run", "--targets=library-*", "--", "pwd"])
         # THEN I the command should run in the matching workspaces
-        output = set(result.stdout.decode().strip().splitlines())
+        output = set(result.stdout.strip().splitlines())
         assert {str(PROJECT_ROOT / path) for path in library_paths} <= output
         assert str(PROJECT_ROOT / application_path) not in output
 
@@ -79,4 +79,4 @@ class TestRun:
         # THEN the exit code is 2
         assert exc.returncode == 2
         # AND the output second command still ran
-        assert "Running ls foo in libs/library-two" in exc.stderr.decode()
+        assert "Running ls foo in libs/library-two" in exc.stderr
