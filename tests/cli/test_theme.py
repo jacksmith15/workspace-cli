@@ -12,7 +12,7 @@ This is some regular text, with <a>accented</a> parts.
 
 Let's draw attention to the <s>good</s> things.
 
-<w>This is something to <b>watch out</b> for!</w>
+<w>This is something to <bold>watch out</bold> for!</w>
 
 <e>Something here has gone <b>very wrong</b>!</e>
 

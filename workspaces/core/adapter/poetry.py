@@ -9,7 +9,7 @@ from poetry.core.pyproject.exceptions import PyProjectException
 from poetry.core.pyproject.toml import PyProjectTOML
 
 from workspaces.core.adapter.base import Adapter
-from workspaces.core.exceptions import WorkspaceImproperlyConfigured, WorkspacesError
+from workspaces.core.exceptions import WorkspacesError, WorkspacesWorkspaceImproperlyConfigured
 
 
 class PoetryAdapter(Adapter, name="poetry", command_prefix=("poetry", "run")):
@@ -41,7 +41,9 @@ class PoetryAdapter(Adapter, name="poetry", command_prefix=("poetry", "run")):
 
     def validate(self):
         if not (self.pyproject_path.exists() and self.pyproject_path.is_file()):
-            raise WorkspaceImproperlyConfigured(f"No pyproject.toml found in workspace {self._workspace.name!r}.")
+            raise WorkspacesWorkspaceImproperlyConfigured(
+                f"No pyproject.toml found in workspace {self._workspace.name!r}."
+            )
         error_message: Optional[str] = None
         try:
             local_config = self.pyproject.poetry_config
@@ -55,7 +57,7 @@ class PoetryAdapter(Adapter, name="poetry", command_prefix=("poetry", "run")):
                     error_message += "  - {}\n".format(error)
 
         if error_message:
-            raise WorkspaceImproperlyConfigured(
+            raise WorkspacesWorkspaceImproperlyConfigured(
                 f"The Poetry configuration at {self.pyproject_path} is invalid:\n" + error_message
             )
 

@@ -8,8 +8,8 @@ from typing import Dict, List, Optional, Union
 
 import jsonschema
 
+from workspaces.core import exceptions
 from workspaces.core.adapter import Adapter, get_adapter
-from workspaces.core.exceptions import WorkspacesError
 from workspaces.core.settings import get_settings
 from workspaces.core.templates import Templates
 
@@ -49,7 +49,7 @@ class WorkspacesProject:
             filepath = directory / get_settings().project_filename
             if filepath.exists() and filepath.is_file():
                 return cls.load(filepath)
-        raise WorkspacesError(
+        raise exceptions.WorkspacesProjectNotFoundError(
             f"No workspaces project file {get_settings().project_filename!r} found in '{path}' or its parents."
         )
 
@@ -59,7 +59,7 @@ class WorkspacesProject:
         try:
             body = json.loads(text)
         except json.JSONDecodeError:
-            raise WorkspacesError(f"Workspaces project file at '{path}' is not valid JSON.")
+            raise exceptions.WorkspacesProjectValidationError(f"Workspaces project file at '{path}' is not valid JSON.")
 
         try:
             jsonschema.validate(
@@ -67,7 +67,9 @@ class WorkspacesProject:
                 instance=body,
             )
         except jsonschema.ValidationError as exc:
-            raise WorkspacesError(f"Invalid workspaces project file at '{path}': {exc.message}")
+            raise exceptions.WorkspacesProjectValidationError(
+                f"Invalid workspaces project file at '{path}': {exc.message}"
+            )
 
         kwargs = {"path": path.parent, "workspaces": {}}
         if "plugins" in body:
@@ -119,7 +121,7 @@ class WorkspacesProject:
             try:
                 importlib.import_module(plugin)
             except ModuleNotFoundError:
-                raise WorkspacesError(f"Could not find configured plugin {plugin!r}")
+                raise exceptions.WorkspacesPluginError(f"Could not find configured plugin {plugin!r}")
 
 
 @dataclass

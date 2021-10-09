@@ -2,7 +2,7 @@ from types import MappingProxyType
 from typing import Type
 
 from workspaces.core.adapter.base import Adapter
-from workspaces.core.exceptions import WorkspaceImproperlyConfigured
+from workspaces.core.exceptions import WorkspacesWorkspaceImproperlyConfigured
 
 try:
     from workspaces.core.adapter.pipenv import PipenvAdapter
@@ -30,7 +30,7 @@ def get_adapter(name: str) -> Type[Adapter]:
     try:
         return adapters[name]
     except KeyError:
-        raise WorkspaceImproperlyConfigured(
+        raise WorkspacesWorkspaceImproperlyConfigured(
             f"No adapter of type {name!r} registered. Available types are {list(adapters)}."
         )
 

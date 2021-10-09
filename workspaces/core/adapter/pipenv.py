@@ -9,7 +9,7 @@ import pipenv
 from pipfile import Pipfile
 
 from workspaces.core.adapter.base import Adapter
-from workspaces.core.exceptions import WorkspaceImproperlyConfigured, WorkspacesError
+from workspaces.core.exceptions import WorkspacesError, WorkspacesWorkspaceImproperlyConfigured
 
 assert pipenv  # please the linter - pipenv must be imported to access vendored pipfile.
 
@@ -41,11 +41,11 @@ class PipenvAdapter(Adapter, name="pipenv", command_prefix=("pipenv", "run")):
 
     def validate(self):
         if not (self.pipfile_path.exists() and self.pipfile_path.is_file()):
-            raise WorkspaceImproperlyConfigured(f"No Pipfile found in workspace {self._workspace.name!r}.")
+            raise WorkspacesWorkspaceImproperlyConfigured(f"No Pipfile found in workspace {self._workspace.name!r}.")
         try:
             _ = self.pipfile
         except Exception as exc:
-            raise WorkspaceImproperlyConfigured(
+            raise WorkspacesWorkspaceImproperlyConfigured(
                 f"Error loading pipfile for workspace {self._workspace.name!r}: {str(exc)}"
             )
 
@@ -77,7 +77,7 @@ class PipenvAdapter(Adapter, name="pipenv", command_prefix=("pipenv", "run")):
                 no_input=True,
             )
         except Exception as exc:
-            raise WorkspaceImproperlyConfigured(
+            raise WorkspacesError(
                 f"""Failed to initialise poetry workspace at {str(path)!r}:
   {str(exc)}
 """

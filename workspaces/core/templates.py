@@ -87,7 +87,7 @@ def _build_context(template_path: Path, target_directory: Path) -> str:
     return extra_context
 
 
-def _prompt_for_config(context, initial_config: dict):
+def _prompt_for_config(context, initial_config: dict):  # pragma: no cover
     """Prompt user to enter a new config.
 
     This is copied from

@@ -37,13 +37,25 @@ class Adapter:
         raise NotImplementedError  # pragma: no cover
 
     def validate(self):
-        """Validate the workspace."""
+        """Validate the workspace.
+
+        Implementations of this method should raise WorkspacesWorkspaceError if the
+        workspace fails validation.
+        """
         raise NotImplementedError  # pragma: no cover
 
     def sync(self, include_dev: bool = True) -> subprocess.CompletedProcess:
-        """Sync dependencies of the workspace."""
+        """Sync dependencies of the workspace.
+
+        This should preferably be a reproducible action (i.e. installing from a lockfile).
+        """
         raise NotImplementedError  # pragma: no cover
 
     @classmethod
     def new(cls, path: Path):
+        """Create a new workspace at path using default template.
+
+        If an Adapter chooses not to implement this method, the user will be required to
+        provide a custom template to initialise a workspace with this type.
+        """
         raise NotImplementedError
