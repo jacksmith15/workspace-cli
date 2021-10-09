@@ -78,7 +78,7 @@ class PipenvAdapter(Adapter, name="pipenv", command_prefix=("pipenv", "run")):
             )
         except Exception as exc:
             raise WorkspacesError(
-                f"""Failed to initialise poetry workspace at {str(path)!r}:
+                f"""Failed to initialise pipenv workspace at {str(path)!r}:
   {str(exc)}
 """
             )

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import subprocess
+import sys
 from pathlib import Path
 from typing import Optional, Set
 
@@ -76,22 +77,21 @@ class PoetryAdapter(Adapter, name="poetry", command_prefix=("poetry", "run")):
     @classmethod
     def new(cls, path: Path):
         try:
-            subprocess.run(
-                f"poetry new {path.resolve()}".split(" "),
-                capture_output=True,
-                check=True,
+            from cookiecutter.main import cookiecutter
+        except ImportError:
+            raise WorkspacesError("Cookiecutter is not installed - run 'pip install workspaces[cookiecutter]'.")
+        template_path = Path(__file__).parent.parent.parent / "templates/poetry"
+        try:
+            version = sys.version_info
+            cookiecutter(
+                template=str(template_path),
+                output_dir=path.parent,
+                extra_context={"project_slug": path.name, "python_version": f"{version.major}.{version.minor}"},
+                no_input=True,
             )
-        except subprocess.CalledProcessError as exc:
-            output = "\n  ".join([exc.stdout.decode().strip(), exc.stderr.decode().strip()]).strip()
+        except Exception as exc:
             raise WorkspacesError(
                 f"""Failed to initialise poetry workspace at {str(path)!r}:
-  {output}
-"""
-            )
-        with open(path / "poetry.toml", "w", encoding="utf-8") as file:
-            file.write(
-                """[virtualenvs]
-create = true
-in-project = true
+  {str(exc)}
 """
             )
