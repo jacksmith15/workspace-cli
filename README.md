@@ -1,4 +1,4 @@
-# Workspaces
+# Workspaces CLI
 
 Manage interdependent projects as workspaces.
 

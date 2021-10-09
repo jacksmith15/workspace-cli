@@ -26,7 +26,8 @@ class Adapter:
 
     def run(self, command: str, capture_output: bool = False, check: bool = False) -> subprocess.CompletedProcess:
         """Run a command within the workspace."""
-        command = shlex.join(self.command_prefix + shlex.split(command))
+        # We don't do shlex.join(prefix + shlex.split(command)) because this will escape e.g. |
+        command = " ".join([shlex.join(self.command_prefix), command])
         return subprocess.run(
             command,
             capture_output=capture_output,

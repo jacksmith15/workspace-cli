@@ -74,3 +74,13 @@ class TestRun:
         assert exc.returncode == 2
         # AND the output second command still ran
         assert "Running ls foo in libs/library-two" in exc.stderr
+
+    @staticmethod
+    def should_support_piping_inside_command():
+        # GIVEN I have a workspaces
+        workspace = "library-one"
+        run(["workspaces", "new", "--type", "poetry", f"libs/{workspace}"])
+        # WHEN I run a command with a pipe
+        result = run(["workspaces", "run", "-c", "echo foo | grep foo"])
+        # THEN the expected output should be seen
+        assert result.stdout.splitlines()[-1] == "foo"
