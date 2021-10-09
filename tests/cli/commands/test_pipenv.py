@@ -11,7 +11,7 @@ class TestPipenvE2E:
         # THEN they should both exist
         assert set(run(["workspaces", "list", "--output", "names"]).text.splitlines()) == {"library-one", "library-two"}
         # AND I should be able to run commands in them
-        assert set(run(["workspaces", "run", "pwd"]).stdout.splitlines()) == {
+        assert set(run(["workspaces", "run", "-c", "pwd"]).stdout.splitlines()) == {
             str(PROJECT_ROOT / f"libs/{workspace}") for workspace in workspaces
         }
         # AND GIVEN one depends on the other

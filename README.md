@@ -36,11 +36,20 @@ You can also track an existing project as a workspace:
 workspaces add libs/library-two
 ```
 
-You can run a command in each workspace, ensuring that each workspace uses their respective isloated virtualenvs:
+You can run a command in every workspace, ensuring that each workspace uses their respective isolated virtualenvs:
 
 ```bash
-workspaces run pytest
+workspaces run -c pytest
 ```
+
+Or specify the workspaces to run in:
+
+```bash
+workspaces run library-one -c pytest
+```
+
+> :information_source: `workspaces run` supports piping a list of target workspace names, as well as workspace names with globs, e.g. `echo "library-*" | workspaces run -c pytest`.
+>
 
 ### Dependency inference
 
@@ -55,7 +64,7 @@ workspaces dependees library-one
 Combining the above with `run`, you can easily re-run tests on the affected workspaces:
 
 ```bash
-workspaces run --targets=$(workspace dependees --output=csv library-one) pytest
+workspaces dependees library-one | workspaces run -c pytest
 ```
 
 You can also check which workspace (if any) a particular file, or set of files, belongs to:
@@ -68,9 +77,7 @@ workspaces reverse /path/to/project/lib/library-one/foo.py
 Combining `run`, `dependees` and `reverse`, you can test affected workspaces based on a git diff:
 
 ```bash
-workspaces run \
-    --target=$(git --no-pager diff --name-only | workspaces reverse | workspaces dependees --output=csv) \
-    pytest
+git --no-pager diff --name-only | workspaces reverse | workspaces dependees | workspaces run -c 'pytest'
 ```
 
 ## Development

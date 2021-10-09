@@ -11,7 +11,7 @@ class TestRun:
     def should_do_nothing_when_no_workspaces_are_configured():
         # GIVEN I have no workspaces configured
         # WHEN I workspace run a command
-        result = run(["workspaces", "run", "pwd"])
+        result = run(["workspaces", "run", "-c", "pwd"])
         # THEN I should see the expected output
         assert "No workspaces selected" in result.text
 
@@ -22,7 +22,7 @@ class TestRun:
         for path in paths:
             run(["workspaces", "new", "--type", "poetry", path])
         # WHEN I workspace run a command with no option
-        result = run(["workspaces", "run", "pwd"])
+        result = run(["workspaces", "run", "-c", "pwd"])
         # THEN I should get the expected result
         output = set(result.stdout.strip().splitlines())
         assert {str(PROJECT_ROOT / path) for path in paths} <= output
@@ -36,13 +36,7 @@ class TestRun:
             run(["workspaces", "new", "--type", "poetry", path])
         # WHEN I workspace run a command on target workspaces
         result = run(
-            [
-                "workspaces",
-                "run",
-                f"--targets={','.join([path.split('/')[-1] for path in target_paths])}",
-                "--",
-                "pwd",
-            ],
+            ["workspaces", "run", "-c", "pwd", *[path.split("/")[-1] for path in target_paths]],
             assert_success=True,
         )
         # THEN I should get the expected result
@@ -59,7 +53,7 @@ class TestRun:
         application_path = "apps/application-one"
         run(["workspaces", "new", "--type", "poetry", application_path])
         # WHEN I workspace run a command using a glob to select the common prefix
-        result = run(["workspaces", "run", "--targets=library-*", "--", "pwd"])
+        result = run(["workspaces", "run", "-c", "pwd", "library-*"])
         # THEN I the command should run in the matching workspaces
         output = set(result.stdout.strip().splitlines())
         assert {str(PROJECT_ROOT / path) for path in library_paths} <= output
@@ -74,7 +68,7 @@ class TestRun:
         # WHEN I run a command with exit code 2 in the first workspace
         Path(PROJECT_ROOT / "libs/library-two" / "foo").touch()
         with pytest.raises(subprocess.CalledProcessError) as exc_info:
-            run(["workspaces", "run", "ls", "foo"], assert_success=False)
+            run(["workspaces", "run", "-c", "ls foo"], assert_success=False)
         exc = exc_info.value
         # THEN the exit code is 2
         assert exc.returncode == 2

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import shlex
 import subprocess
 from typing import TYPE_CHECKING, ClassVar, List, Optional, Set, Tuple
 
@@ -23,13 +24,15 @@ class Adapter:
     def __repr__(self):
         return f"{type(self)}({self._workspace})"
 
-    def run(self, command: List[str], capture_output: bool = False, check: bool = False) -> subprocess.CompletedProcess:
+    def run(self, command: str, capture_output: bool = False, check: bool = False) -> subprocess.CompletedProcess:
         """Run a command within the workspace."""
+        command = shlex.join(self.command_prefix + shlex.split(command))
         return subprocess.run(
-            self.command_prefix + command,
+            command,
             capture_output=capture_output,
             check=check,
             cwd=self._workspace.resolved_path,
+            shell=True,
         )
 
     def dependencies(self, include_dev: bool = True) -> Set[str]:
