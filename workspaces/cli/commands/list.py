@@ -10,7 +10,7 @@ from workspaces.core.models import WorkspacesProject
 @click.option(
     "--output",
     "-o",
-    type=click.Choice(("default", "json")),
+    type=click.Choice(("default", "names", "json")),
     help="Select the output format. By default, just the workspace names will be shown.",
     default="default",
 )
@@ -30,5 +30,14 @@ def list_(output: str = "default"):
                 ),
                 err=False,
             )
-        else:
+        elif output == "names":
             theme.echo(workspace.name, err=False)
+        else:
+            theme.echo(
+                f"""
+<h>Name</h>: <b>{workspace.name}</b>
+<h>Type</h>: {workspace.type}
+<h>Path</h>: <a>{project.path / workspace.path}</a>
+<h>Dependencies</h>: [{", ".join(workspace.adapter.dependencies())}]""",
+                err=False,
+            )

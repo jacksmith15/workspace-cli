@@ -21,7 +21,7 @@ class TestNew:
         # AND the poetry project should have the correct name
         assert run(["poetry", "version"], cwd=workspace_path).text == "my-library 0.1.0"
         # AND the new project should be tracked as a workspace in the root project
-        assert run(["workspaces", "list"]).text == "my-library"
+        assert run(["workspaces", "list", "--output", "names"]).text == "my-library"
 
     @staticmethod
     def should_fail_when_project_with_that_name_already_exists():

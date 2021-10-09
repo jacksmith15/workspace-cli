@@ -9,7 +9,7 @@ class TestPipenvE2E:
         for workspace in workspaces:
             run(["workspaces", "new", "--type", "pipenv", f"libs/{workspace}"])
         # THEN they should both exist
-        assert set(run(["workspaces", "list"]).text.splitlines()) == {"library-one", "library-two"}
+        assert set(run(["workspaces", "list", "--output", "names"]).text.splitlines()) == {"library-one", "library-two"}
         # AND I should be able to run commands in them
         assert set(run(["workspaces", "run", "pwd"]).stdout.splitlines()) == {
             str(PROJECT_ROOT / f"libs/{workspace}") for workspace in workspaces

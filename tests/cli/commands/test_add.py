@@ -15,7 +15,7 @@ class TestAdd:
         # WHEN I add the path as a workspace
         run(["workspaces", "add", workspace_relpath])
         # THEN the project should now be tracked as a workspace in the root project
-        assert run(["workspaces", "list"]).text == "my-library"
+        assert run(["workspaces", "list", "--output", "names"]).text == "my-library"
 
     @staticmethod
     def should_fail_when_project_with_that_name_already_exists():

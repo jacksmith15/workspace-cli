@@ -5,7 +5,6 @@ import click
 
 from workspaces.cli import theme
 from workspaces.core.models import WorkspacesProject
-from workspaces.core.settings import get_settings
 
 
 @click.command()
