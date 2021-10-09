@@ -69,5 +69,5 @@ def remove(module_path: str):
 @plugin.command("list")
 def list_():
     project = WorkspacesProject.from_path()
-    for plugin in project.plugins:
+    for plugin in project.plugins or []:
         theme.echo(plugin)

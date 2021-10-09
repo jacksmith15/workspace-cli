@@ -1,5 +1,5 @@
 import re
-from typing import List
+from typing import Iterable, List, Optional, Sequence
 
 import click
 
@@ -109,3 +109,23 @@ Let's draw attention to the <s>good</s> things.
 
 """
     )  # pragma: no cover
+
+
+def table(rows: Iterable[Sequence], col_styles: Sequence[Optional[str]] = None) -> str:
+    """Convert a list of rows into a justified table."""
+    if not rows:
+        return ""
+    cols = [*zip(*rows)]
+    max_lengths = [max([len(strip_tags(str(item))) for item in col]) for col in cols]
+
+    def justify(item, col_idx: int):
+        item = str(item)
+        if col_styles and col_styles[col_idx]:
+            item = f"<{col_styles[col_idx]}>{item}</{col_styles[col_idx]}>"
+        tag_length = len(item) - len(strip_tags(item))
+        return item.ljust(max_lengths[col_idx] + tag_length)
+
+    def render_row(row: Sequence):
+        return "  ".join(justify(item, idx) for idx, item in enumerate(row))
+
+    return "\n".join([render_row(row) for row in rows])

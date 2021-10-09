@@ -4,3 +4,4 @@
 !/templates/**/*
 !/plugins
 !/plugins/**/*
+__pycache__

@@ -121,7 +121,7 @@ class WorkspacesProject:
             try:
                 importlib.import_module(plugin)
             except ModuleNotFoundError:
-                raise exceptions.WorkspacesPluginError(f"Could not find configured plugin {plugin!r}")
+                raise exceptions.WorkspacesPluginError(f"Could not find configured plugin {plugin!r}.")
 
 
 @dataclass
