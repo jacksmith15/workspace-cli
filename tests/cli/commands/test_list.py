@@ -8,7 +8,7 @@ class TestList:
     @staticmethod
     def should_show_nothing_when_no_workspaces_are_configured():
         result = run(["workspaces", "list"])
-        assert result.text == ""
+        assert result.stdout == ""
 
     @staticmethod
     def should_show_workspaces():
@@ -44,6 +44,17 @@ Dependencies: []
         result = run(["workspaces", "list", "--output=names"])
         # THEN the workspaces should be shown
         assert set(result.text.splitlines()) == {"my-library", "my-other-library"}
+
+    @staticmethod
+    def should_show_targets_only_if_specified():
+        # GIVEN I have two workspaces
+        paths = {"libs/my-library", "libs/my-other-library"}
+        for path in paths:
+            run(["workspaces", "new", "--type", "poetry", path])
+        # WHEN I run workspace list
+        result = run(["workspaces", "list", "--output=names", "my-library"])
+        # THEN the workspaces should be shown
+        assert set(result.text.splitlines()) == {"my-library"}
 
     @staticmethod
     def should_output_to_json():

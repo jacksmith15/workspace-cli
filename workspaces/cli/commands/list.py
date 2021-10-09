@@ -1,12 +1,20 @@
 import json
+import sys
+from typing import Tuple
 
 import click
 
-from workspaces.cli import theme
+from workspaces.cli import callbacks, theme
+from workspaces.cli.utils import resolve_targets
 from workspaces.core.models import WorkspacesProject
 
 
 @click.command("list")
+@click.argument(
+    "targets",
+    nargs=-1,
+    callback=callbacks.consume_stdin,
+)
 @click.option(
     "--output",
     "-o",
@@ -14,10 +22,20 @@ from workspaces.core.models import WorkspacesProject
     help="Select the output format. By default, just the workspace names will be shown.",
     default="default",
 )
-def list_(output: str = "default"):
+def list_(targets: Tuple[str, ...], output: str = "default"):
     """Lists workspaces tracked in current project."""
     project = WorkspacesProject.from_path()
-    for workspace in project.workspaces.values():
+
+    if targets:
+        target_set = resolve_targets(project, targets)
+    else:
+        target_set = set(project.workspaces)
+
+    if not target_set:
+        sys.exit(0)
+
+    for name in sorted(target_set):
+        workspace = project.workspaces[name]
         if output == "json":
             theme.echo(
                 json.dumps(
