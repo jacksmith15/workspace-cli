@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "workspaces"
+name = "workspaces-cli"
 version = "0.1.0"
 description = "Manage interdependent projects as workspaces."
 authors = ["Jack Smith"]
 packages = [
     {include = "workspaces"},
 ]
-homepage = "https://github.com/jacksmith15/workspaces"
-repository = "https://github.com/jacksmith15/workspaces"
+homepage = "https://github.com/jacksmith15/workspaces-cli"
+repository = "https://github.com/jacksmith15/workspaces-cli"
 readme = "README.md"
 
 [tool.poetry.scripts]

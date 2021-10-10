@@ -16,10 +16,10 @@ Types of changes are:
 ### Added
 * Project started :)
 
-[Unreleased]: https://github.com/jacksmith15/workspaces/compare/initial..HEAD
+[Unreleased]: https://github.com/jacksmith15/workspaces-cli/compare/initial..HEAD
 
 [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
-[_release_link_format]: https://github.com/jacksmith15/workspaces/compare/{previous_tag}..{tag}
+[_release_link_format]: https://github.com/jacksmith15/workspaces-cli/compare/{previous_tag}..{tag}
 [_breaking_change_token]: BREAKING
