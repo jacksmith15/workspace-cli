@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import Set
+from typing import Set, Tuple
 
 import pipenv
 from pipfile import Pipfile
@@ -60,6 +61,20 @@ class PipenvAdapter(Adapter, name="pipenv", command_prefix=("pipenv", "run")):
             check=False,
             cwd=self._workspace.resolved_path,
         )
+
+    def run_args(self, command: str) -> Tuple[str, dict]:
+        """Override args for running commands.
+
+        Set PIPENV_IGNORE_VIRTUALENVS to prevent pipenv using the wrong venv
+        in the case that workspaces is installed with a venv.
+        """
+        command, kwargs = super().run_args(command)
+
+        env = os.environ.copy()
+        env["PIPENV_IGNORE_VIRTUALENVS"] = "1"
+        kwargs["env"] = env
+
+        return command, kwargs
 
     @classmethod
     def new(cls, path: Path):

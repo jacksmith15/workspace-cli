@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import Optional, Set
+from typing import Optional, Set, Tuple
 
 from poetry.core.factory import Factory
 from poetry.core.pyproject.exceptions import PyProjectException
@@ -73,6 +74,24 @@ class PoetryAdapter(Adapter, name="poetry", command_prefix=("poetry", "run")):
             check=False,
             cwd=self._workspace.resolved_path,
         )
+
+    def run_args(self, command: str) -> Tuple[str, dict]:
+        """Get modified command and kwargs that should be used when running inside the workspace.
+
+        Deactivate any active virtual environments when running commands in the workspace,
+        otherwise poetry will use that instead of managing its own.
+        """
+        command, kwargs = super().run_args(command)
+
+        env = os.environ.copy()
+        venv_path = env.get("VIRTUAL_ENV", None)
+        if not venv_path:
+            return command, kwargs
+
+        del env["VIRTUAL_ENV"]
+        env["PATH"] = ":".join([path for path in env.get("PATH", "").split(":") if path != f"{venv_path}/bin"])
+        kwargs["env"] = env
+        return command, kwargs
 
     @classmethod
     def new(cls, path: Path):
