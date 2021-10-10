@@ -65,14 +65,15 @@ class PoetryAdapter(Adapter, name="poetry", command_prefix=("poetry", "run")):
 
     def sync(self, include_dev: bool = True) -> subprocess.CompletedProcess:
         """Sync dependencies of the workspace."""
-        command = "poetry install".split(" ")
+        command = "poetry install"
         if not include_dev:
-            command.append("--no-dev")
+            command = command + " --no-dev"
+        _, kwargs = self.run_args(command)
         return subprocess.run(
             command,
             capture_output=False,
             check=False,
-            cwd=self._workspace.resolved_path,
+            **kwargs,
         )
 
     def run_args(self, command: str) -> Tuple[str, dict]:

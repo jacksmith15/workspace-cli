@@ -52,14 +52,15 @@ class PipenvAdapter(Adapter, name="pipenv", command_prefix=("pipenv", "run")):
 
     def sync(self, include_dev: bool = True) -> subprocess.CompletedProcess:
         """Sync dependencies of the workspace."""
-        command = "pipenv sync".split(" ")
+        command = "pipenv sync"
         if include_dev:
-            command.append("--dev")
+            command = command + " --dev"
+        _, kwargs = self.run_args(command)
         return subprocess.run(
             command,
             capture_output=False,
             check=False,
-            cwd=self._workspace.resolved_path,
+            **kwargs,
         )
 
     def run_args(self, command: str) -> Tuple[str, dict]:

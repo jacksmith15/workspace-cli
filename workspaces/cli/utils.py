@@ -1,3 +1,4 @@
+import re
 from fnmatch import fnmatch
 from pathlib import Path
 from typing import Iterable, Optional, Set
@@ -7,6 +8,10 @@ from workspaces.core.models import Workspace, WorkspacesProject
 
 
 def resolve_targets(project: WorkspacesProject, targets: Iterable[str]) -> Set[str]:
+    """Extract workspace names from target specifier..
+
+    Targets can be a list of exact workspace names, or glob patterns.
+    """
     result = set()
     for target in targets:
         target = target.strip()
@@ -16,8 +21,11 @@ def resolve_targets(project: WorkspacesProject, targets: Iterable[str]) -> Set[s
             if target == workspace:
                 result.add(workspace)
                 continue
-            if fnmatch(workspace, target):
-                result.add(workspace)
+            try:
+                if fnmatch(workspace, target):
+                    result.add(workspace)
+            except re.error:
+                continue
     for name in result:
         project.workspaces[name].adapter.validate()
     return result
