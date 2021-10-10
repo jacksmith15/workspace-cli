@@ -28,7 +28,9 @@ jobs:
           pip install poetry
 
       - name: Install dependencies
-        run: poetry install
+        run: |
+          poetry install
+          poetry install -E pipenv -E poetry -E cookiecutter
 
       - name: Run tests
         run: poetry run inv verify

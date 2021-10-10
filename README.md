@@ -61,20 +61,20 @@ workspaces dependees library-one
 # library-two
 ```
 
-Combining the above with `run`, you can easily re-run tests on the affected workspaces:
+Combining the above with `run`, you can easily run tests on a workspace and its dependees:
 
 ```bash
 workspaces dependees library-one | workspaces run -c pytest
 ```
 
-You can also check which workspace (if any) a particular file, or set of files, belongs to:
+You can also check which workspace a particular file, or set of files, belongs to:
 
 ```bash
 workspaces reverse /path/to/project/lib/library-one/foo.py
 # library-one
 ```
 
-Combining `run`, `dependees` and `reverse`, you can test affected workspaces based on a git diff:
+Combining `run`, `dependees` and `reverse`, you can test just the affected workspaces based on a git diff:
 
 ```bash
 git --no-pager diff --name-only | workspaces reverse | workspaces dependees | workspaces run -c 'pytest'
