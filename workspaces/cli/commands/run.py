@@ -85,7 +85,7 @@ def _run_in_workspaces_parallel(workspaces: List[Workspace], command: str) -> in
         for name, popen in running.copy().items():
             exit_code = popen.poll()
             theme.echo(
-                f"<a>{next(spinner)} Running</a>: " + ", ".join([f"<b>{name}</b>" for name in running]),
+                f"{next(spinner)} <a>Running</a>: " + ", ".join([f"<b>{name}</b>" for name in running]),
                 nl=False,
                 rewrite=True,
             )
@@ -95,9 +95,9 @@ def _run_in_workspaces_parallel(workspaces: List[Workspace], command: str) -> in
             del running[name]
             complete[name] = Result(exit_code=exit_code, stdout=stdout, stderr=stderr)
             if exit_code != 0:
-                theme.echo(f"<e>❌ {name}</e>", rewrite=True)
+                theme.echo(f"<e>✘ {name}</e>", rewrite=True)
             else:
-                theme.echo(f"<s>✅ {name}</s>", rewrite=True)
+                theme.echo(f"<s>✔ {name}</s>", rewrite=True)
         time.sleep(100 / 1000)  # 100ms
 
     theme.echo("")
@@ -117,7 +117,7 @@ def get_exit_code(exit_codes: Iterable[int]) -> int:
 class Spinner:
     """A spinner for showing progress."""
 
-    def __init__(self, chars: str = "|/-\\", delay: float = 0.1):
+    def __init__(self, chars: str = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏", delay: float = 0.1):
         self._iter = cycle(chars)
         self._last = time.monotonic()
         self._current = next(self._iter)

@@ -36,10 +36,11 @@ def sync(targets: Tuple[str, ...], dev: bool = False):
 
     exit_codes = {0}
     for target in sorted(target_set):
+        theme.echo(f"Syncing environment for <b>{target}</b>\n")
         exit_codes.add(project.workspaces[target].adapter.sync(include_dev=dev).returncode)
 
     exit_code = sorted(exit_codes, key=lambda code: abs(code), reverse=True)[0]
     if exit_code != 0:
-        theme.echo("<e>Some workspaces failed.</w>")
+        theme.echo("<e>Some workspaces failed.</e>")
 
     sys.exit(exit_code)

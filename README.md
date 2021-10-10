@@ -218,5 +218,14 @@ Run tests:
 poetry run inv verify
 ```
 
+### Todos
+
+- [ ] Parallel support for `workspaces sync`
+- [ ] Experiment with non-Python workspaces
+- [ ] Detailed documentation, with common patterns
+- [ ] Track time spent on each workspace on `workspaces run --parallel`
+- [ ] Easier set-up of local plugins (?)
+- [ ] Test output on shells with limited color support
+
 # License
 This project is distributed under the MIT license.
