@@ -226,7 +226,7 @@ poetry run inv verify
 - [ ] Track time spent on each workspace on `workspace run --parallel`
 - [ ] Easier set-up of local plugins (?)
 - [ ] Test output on shells with limited color support
-- [ ] "Why not" section in README
+- [ ] "Why not X" section in README
 
 # License
 This project is distributed under the MIT license.
