@@ -1,17 +1,17 @@
 [tool.poetry]
-name = "workspaces-cli"
+name = "workspace-cli"
 version = "0.1.0"
-description = "Manage interdependent projects as workspaces."
+description = "Manage interdependent projects in a workspace."
 authors = ["Jack Smith"]
 packages = [
-    {include = "workspaces"},
+    {include = "workspace"},
 ]
-homepage = "https://github.com/jacksmith15/workspaces-cli"
-repository = "https://github.com/jacksmith15/workspaces-cli"
+homepage = "https://github.com/jacksmith15/workspace-cli"
+repository = "https://github.com/jacksmith15/workspace-cli"
 readme = "README.md"
 
 [tool.poetry.scripts]
-workspaces = "workspaces.__main__:run_cli"
+workspace = "workspace.__main__:run_cli"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -51,7 +51,7 @@ exclude = "\\{.*"
 
 [[tool.mypy.overrides]]
 module = [
-    # Source code dependencies
+    # Project code dependencies
     "pipenv.*",
     "jsonschema.*",
     "pipfile.*",

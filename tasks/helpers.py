@@ -1,6 +1,6 @@
 import shutil
 
-import workspaces as package
+import workspace as package
 
 _HEADER_LEVEL_CHARACTERS = {1: "#", 2: "=", 3: "-"}
 

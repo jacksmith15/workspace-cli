@@ -10,8 +10,8 @@ class TestTemplatePathAdd:
     def should_add_a_new_template_path():
         # GIVEN I have a directory containing templates
         template_path = "templates"
-        # WHEN I add that path to the project
-        result = run(["workspaces", "template", "path", "add", template_path])
+        # WHEN I add that path to the workspace
+        result = run(["workspace", "template", "path", "add", template_path])
         # THEN the expected output should be seen
         assert result.text.startswith(f"Added {template_path} to available template directories.")
 
@@ -19,10 +19,10 @@ class TestTemplatePathAdd:
     def should_fail_if_path_already_added():
         # GIVEN a directory is already on the template path
         template_path = "templates"
-        run(["workspaces", "template", "path", "add", template_path])
+        run(["workspace", "template", "path", "add", template_path])
         # WHEN I add that path to the project again
         with pytest.raises(subprocess.CalledProcessError) as exc_info:
-            run(["workspaces", "template", "path", "add", template_path], assert_success=False)
+            run(["workspace", "template", "path", "add", template_path], assert_success=False)
         exc = exc_info.value
         # THEN the exit code is 1
         assert exc.returncode == 1
@@ -37,7 +37,7 @@ class TestTemplatePathRemove:
         template_path = "templates"
         # WHEN I remove that path from the project
         with pytest.raises(subprocess.CalledProcessError) as exc_info:
-            run(["workspaces", "template", "path", "remove", template_path], assert_success=False)
+            run(["workspace", "template", "path", "remove", template_path], assert_success=False)
         exc = exc_info.value
         # THEN the exit code is 1
         assert exc.returncode == 1
@@ -48,9 +48,9 @@ class TestTemplatePathRemove:
     def should_remove_path_if_tracked():
         # GIVEN a directory is already on the template path
         template_path = "templates"
-        run(["workspaces", "template", "path", "add", template_path])
+        run(["workspace", "template", "path", "add", template_path])
         # WHEN I remove that path from the project
-        result = run(["workspaces", "template", "path", "remove", template_path])
+        result = run(["workspace", "template", "path", "remove", template_path])
         # THEN the expected output should be seen
         assert result.text.startswith(f"Stopped detecting templates at {template_path}.")
 
@@ -59,7 +59,7 @@ class TestTemplateList:
     @staticmethod
     def should_show_nothing_when_template_path_not_set():
         # WHEN I run template list
-        result = run(["workspaces", "template", "list"])
+        result = run(["workspace", "template", "list"])
         # THEN nothing should be shown
         assert not result.text
 
@@ -68,9 +68,9 @@ class TestTemplateList:
         # GIVEN I have a directory containing templates
         template_path = "templates"
         # AND that directory is on the template path
-        run(["workspaces", "template", "path", "add", template_path])
+        run(["workspace", "template", "path", "add", template_path])
         # WHEN I run template list
-        output = run(["workspaces", "template", "list"]).text.splitlines()
+        output = run(["workspace", "template", "list"]).text.splitlines()
         result = {name: path for line in output for name, path in [line.split(None, 1)]}
         # THEN the expected templates are included
         assert result["valid-pipenv-template"] == "templates/valid-pipenv-template"
@@ -85,10 +85,10 @@ class TestTemplateList:
         # GIVEN I have two template paths with overlapping template names
         inner = "templates/nested"
         outer = "templates"
-        run(["workspaces", "template", "path", "add", inner])
-        run(["workspaces", "template", "path", "add", outer])
+        run(["workspace", "template", "path", "add", inner])
+        run(["workspace", "template", "path", "add", outer])
         # WHEN I list the templates
-        output = run(["workspaces", "template", "list"]).text.splitlines()
+        output = run(["workspace", "template", "list"]).text.splitlines()
         result = {name: path for line in output for name, path in [line.split(None, 1)]}
         # THEN templates on both paths are shown
         assert set(result) == {"bad-template", "valid-pipenv-template", "other-valid-pipenv-template"}

@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from dataclasses import replace
 
-from workspaces.core.settings import get_settings
+from workspace.core.settings import get_settings
 
 
 @contextmanager

@@ -1,7 +1,7 @@
+import changelog
 import toml
 
-import changelog
-import workspaces as package
+import workspace as package
 
 
 def test_version_matches_pyproject() -> None:

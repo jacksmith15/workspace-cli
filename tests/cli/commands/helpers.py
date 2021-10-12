@@ -3,14 +3,14 @@ import subprocess
 from pathlib import Path
 from typing import List, Union
 
-from tests.cli.commands.constants import PROJECT_ROOT
+from tests.cli.commands.constants import WORKSPACE_ROOT
 
 
-def run(command: Union[str, List[str]], cwd: Union[Path, str] = PROJECT_ROOT, assert_success: bool = True):
-    """Run a command from within the test project root."""
+def run(command: Union[str, List[str]], cwd: Union[Path, str] = WORKSPACE_ROOT, assert_success: bool = True):
+    """Run a command from within the test workspace root."""
     cwd = Path(cwd)
     if not cwd.is_absolute():
-        cwd = PROJECT_ROOT / cwd
+        cwd = WORKSPACE_ROOT / cwd
 
     def format_output(stdout: str, stderr: str) -> str:
         return "\n".join(

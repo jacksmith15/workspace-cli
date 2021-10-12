@@ -1,6 +1,6 @@
 import pytest
 
-from workspaces.cli.theme import colorize, strip_tags
+from workspace.cli.theme import colorize, strip_tags
 
 
 class TestColorize:
