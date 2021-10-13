@@ -66,7 +66,7 @@ class Adapter:
     def validate(self):
         """Validate the project.
 
-        Implementations of this method should raise WorkspacesWorkspaceError if the
+        Implementations of this method should raise WorkspaceProjectError if the
         project fails validation.
         """
         raise NotImplementedError  # pragma: no cover
