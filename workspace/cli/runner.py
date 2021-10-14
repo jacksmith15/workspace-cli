@@ -25,6 +25,8 @@ def _run_in_series(project_commands: List[Tuple[Project, str]]) -> int:
         exit_codes[project.name] = result.returncode
 
     failed = {name for name, code in exit_codes.items() if code}
+
+    theme.echo("")
     if failed:
         theme.echo("<e>Some projects failed</e>: " + ", ".join([f"<b>{name}</b>" for name in failed]))
     return _get_exit_code(exit_codes.values())

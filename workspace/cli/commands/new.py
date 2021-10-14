@@ -76,15 +76,16 @@ Available templates are:
         type = type or utils.detect_type(workspace, path.resolve())
         if not type:
             valid_type_list = "\n".join([f"  - <b>{name}</b>" for name in get_adapters()])
+            template_path = workspace.templates[template]  # type: ignore[index]
             raise WorkspaceCLIError(
                 f"""
 <e>Could not detect type of generated project.</e>
 
-This is likely an issue with the template at <b>{workspace.templates[template]}</b>.
+This is likely an issue with the template at <b>{template_path}</b>.
 
 You can specify the intended type for more detailed information:
 
-    <a>workspace add --type <b>TYPE</b> {path}</a>
+    <a>workspace add --template {template} --type <b>TYPE</b> {path}</a>
 
 Available types are:
 {valid_type_list}
