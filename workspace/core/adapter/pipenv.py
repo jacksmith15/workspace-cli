@@ -50,18 +50,12 @@ class PipenvAdapter(Adapter, name="pipenv", command_prefix=("pipenv", "run")):
                 f"Error loading pipfile for project {self._project.name!r}: {str(exc)}"
             )
 
-    def sync(self, include_dev: bool = True) -> subprocess.CompletedProcess:
-        """Sync dependencies of the project."""
+    def sync_command(self, include_dev: bool = True) -> str:
+        """Get the command which prepares the project environment."""
         command = "pipenv sync"
         if include_dev:
             command = command + " --dev"
-        _, kwargs = self.run_args(command)
-        return subprocess.run(
-            command,
-            capture_output=False,
-            check=False,
-            **kwargs,
-        )
+        return command
 
     def run_args(self, command: str) -> Tuple[str, dict]:
         """Override args for running commands.

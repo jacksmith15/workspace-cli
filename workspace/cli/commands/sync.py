@@ -37,7 +37,9 @@ def sync(specifiers: Tuple[str, ...], dev: bool = False):
     exit_codes = {0}
     for target in sorted(target_set):
         theme.echo(f"Syncing environment for <b>{target}</b>\n")
-        exit_codes.add(workspace.projects[target].adapter.sync(include_dev=dev).returncode)
+        adapter = workspace.projects[target].adapter
+        command = adapter.sync_command(include_dev=dev)
+        exit_codes.add(adapter.run(command).returncode)
 
     exit_code = sorted(exit_codes, key=lambda code: abs(code), reverse=True)[0]
     if exit_code != 0:

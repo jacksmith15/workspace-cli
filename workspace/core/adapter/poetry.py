@@ -61,18 +61,12 @@ class PoetryAdapter(Adapter, name="poetry", command_prefix=("poetry", "run")):
                 f"The Poetry configuration at {self.pyproject_path} is invalid:\n" + error_message
             )
 
-    def sync(self, include_dev: bool = True) -> subprocess.CompletedProcess:
-        """Sync dependencies of the project."""
+    def sync_command(self, include_dev: bool = True) -> str:
+        """Get the command which prepares the project environment."""
         command = "poetry install"
         if not include_dev:
             command = command + " --no-dev"
-        _, kwargs = self.run_args(command)
-        return subprocess.run(
-            command,
-            capture_output=False,
-            check=False,
-            **kwargs,
-        )
+        return command
 
     def run_args(self, command: str) -> Tuple[str, dict]:
         """Get modified command and kwargs that should be used when running inside the project.

@@ -71,10 +71,10 @@ class Adapter:
         """
         raise NotImplementedError  # pragma: no cover
 
-    def sync(self, include_dev: bool = True) -> subprocess.CompletedProcess:
-        """Sync dependencies of the project.
+    def sync_command(self, include_dev: bool = True) -> str:
+        """Get the command which prepares the project environment.
 
-        This should preferably be a reproducible action (i.e. installing from a lockfile).
+        This should preferably be a reproducible action (i.e. installing dependencies from a lockfile).
         """
         raise NotImplementedError  # pragma: no cover
 
