@@ -222,7 +222,6 @@ poetry run inv verify
 
 - [ ] Experiment with non-Python workspaces
 - [ ] Detailed documentation, with common patterns
-- [ ] Track time spent on each workspace on `workspace run --parallel`
 - [ ] Easier set-up of local plugins (?)
 - [ ] Test output on shells with limited color support
 - [ ] "Why not X" section in README

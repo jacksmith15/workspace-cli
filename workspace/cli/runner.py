@@ -47,11 +47,13 @@ def _run_in_parallel(project_commands: List[Tuple[Project, str]]) -> int:
     running = {project.name: project.adapter.popen(command) for project, command in project_commands}
     complete: Dict[str, Result] = {}
     spinner = Spinner()
+    timer = Timer()
+    max_name_length = max([len(name) for name in running])
     while running:
         for name, popen in running.copy().items():
             exit_code = popen.poll()
             theme.echo(
-                f"{next(spinner)} <a>Running</a>: " + ", ".join([f"<b>{name}</b>" for name in running]),
+                f"{next(spinner)} <a>Running ({next(timer)})</a>: " + ", ".join([f"<b>{name}</b>" for name in running]),
                 nl=False,
                 rewrite=True,
             )
@@ -61,10 +63,9 @@ def _run_in_parallel(project_commands: List[Tuple[Project, str]]) -> int:
             del running[name]
             complete[name] = Result(exit_code=exit_code, stdout=stdout, stderr=stderr)
             if exit_code != 0:
-                theme.echo(f"<e>✘ {name}</e>", rewrite=True)
+                theme.echo(f"<e>✘ {name.ljust(max_name_length)} ({next(timer)})</e>", rewrite=True)
             else:
-                theme.echo(f"<s>✔ {name}</s>", rewrite=True)
-        time.sleep(100 / 1000)  # 100ms
+                theme.echo(f"<s>✔ {name.ljust(max_name_length)} ({next(timer)})</s>", rewrite=True)
 
     theme.echo("")
     for name, result in complete.items():
@@ -80,23 +81,25 @@ def _get_exit_code(exit_codes: Iterable[int]) -> int:
     return sorted(exit_codes, key=lambda code: abs(code), reverse=True)[0]
 
 
-class Spinner:
+def Spinner(chars: str = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏", fps: float = 10):
     """A spinner for showing progress."""
+    frames = cycle(chars)
+    current_frame = next(frames)
+    last_update = time.monotonic()
+    delay = 1 / fps
+    while True:
+        now = time.monotonic()
+        if now - last_update > delay:
+            last_update = now
+            current_frame = next(frames)
+        yield current_frame
 
-    def __init__(self, chars: str = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏", delay: float = 0.1):
-        self._iter = cycle(chars)
-        self._last = time.monotonic()
-        self._current = next(self._iter)
-        self._delay = delay
 
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if time.monotonic() - self._last > self._delay:
-            self._last = time.monotonic()
-            self._current = next(self._iter)
-        return self._current
+def Timer():
+    """A timer which shows total time elapsed on each iteration."""
+    start = time.monotonic()
+    while True:
+        yield f"{time.monotonic() - start:.1f}s"
 
 
 class Result(NamedTuple):
