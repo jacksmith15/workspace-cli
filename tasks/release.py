@@ -4,18 +4,18 @@ import re
 from collections.abc import Callable
 from pathlib import Path
 
+import changelog
+from changelog.renderer import render_changelog_release
 from invoke import task
 from invoke.exceptions import Exit, UnexpectedExit
 from termcolor import colored
 
-import changelog
-from changelog.renderer import render_changelog_release
 from tasks.helpers import package, print_header
 from tasks.verify import verify
 
 RELEASE_BRANCH = "main"
 
-PACKAGE_FILE = str(Path(package.__file__).relative_to(Path(".").absolute()))
+PACKAGE_FILE = str(Path(package.__file__).relative_to(Path(__file__).parent.parent.absolute()))
 
 
 @task(pre=[verify])

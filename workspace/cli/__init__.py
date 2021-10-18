@@ -5,6 +5,7 @@ import click
 from workspace.cli import theme
 from workspace.cli.commands.add import add
 from workspace.cli.commands.dependees import dependees
+from workspace.cli.commands.dependencies import dependencies
 from workspace.cli.commands.info import info
 from workspace.cli.commands.init import init
 from workspace.cli.commands.list import list_
@@ -25,7 +26,7 @@ def cli():
     pass
 
 
-for command in (add, dependees, info, init, list_, new, plugin, remove, reverse, run, sync, template):
+for command in (add, dependees, dependencies, info, init, list_, new, plugin, remove, reverse, run, sync, template):
     cli.add_command(command)
 
 

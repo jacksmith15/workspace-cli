@@ -1,0 +1,36 @@
+site_name: Workspace
+theme:
+  name: material
+  icon:
+    admonition:
+      note: ":information_source:"
+repo_name: jacksmith15/workspace-cli
+repo_url: https://github.com/jacksmith15/workspace-cli
+markdown_extensions:
+- toc:
+    permalink: true
+- markdown.extensions.codehilite:
+    guess_lang: false
+- admonition
+- codehilite
+- extra
+- pymdownx.superfences:
+    custom_fences:
+    - name: mermaid
+      class: mermaid
+      format: !!python/name:pymdownx.superfences.fence_code_format ''
+- pymdownx.tabbed
+- pymdownx.details
+- extensions.termynal
+- extensions.gfm_admonitions
+nav:
+- Home: index.md
+- Installation: installation.md
+- Configuration: configuration.md
+- Basic usage: basic-usage.md
+- Templates: templates.md
+- Plugins: plugins.md
+- FAQ: faq.md
+extra_css:
+- css/termynal.css
+- css/overrides.css
