@@ -37,6 +37,8 @@ poetry run inv verify
 - [ ] More detailed plugin documentation
 - [ ] Example workspaces
 - [ ] Test output on shells with limited color support
+- [ ] Labelling projects
+- [ ] Project aliases
 
 ## License
 

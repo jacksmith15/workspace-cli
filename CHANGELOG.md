@@ -15,11 +15,17 @@ Types of changes are:
 ## [Unreleased]
 ### Added
 * Project started :)
+* Added initial feature-set:
+    - Create and add projects to a workspace
+    - Inspect inter-dependencies between projects
+    - Run commands over multiple projects (serial or parallel)
+    - Use custom templates
+    - Add plugins containing custom project type adapters
 
-[Unreleased]: https://github.com/jacksmith15/workspaces-cli/compare/initial..HEAD
+[Unreleased]: https://github.com/jacksmith15/workspace-cli/compare/initial..HEAD
 
 [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
-[_release_link_format]: https://github.com/jacksmith15/workspaces-cli/compare/{previous_tag}..{tag}
+[_release_link_format]: https://github.com/jacksmith15/workspace-cli/compare/{previous_tag}..{tag}
 [_breaking_change_token]: BREAKING
