@@ -1,8 +1,13 @@
 # Installation
 
-This project is not currently packaged and so must be installed manually.
+Run
 
-Clone the project with the following command:
+```terminal
+pip install workspace-cli
 ```
-git clone https://github.com/jacksmith15/workspace-cli.git
+
+You can specify extras to ensure all functionality is enabled:
+
+```terminal
+pip install workspace-cli[pipenv,poetry,cookiecutter]
 ```

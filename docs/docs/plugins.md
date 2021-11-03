@@ -106,5 +106,4 @@ $ workspace plugin remove plugins.requirementstxt
 Removed plugin plugins.requirementstxt.
 ```
 
-!!! warning
-    Ensure that no projects use types enabled by a plugin before disabling it, or the workspace will not be able to interact with the project.
+> ⚠️ Ensure that no projects use types enabled by a plugin before disabling it, or the workspace will not be able to interact with the project.

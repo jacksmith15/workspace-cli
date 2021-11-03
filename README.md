@@ -6,13 +6,13 @@ It was initially implemented to manage Python projects, but can be extended to i
 
 ## Documentation
 
-- [Home](./docs/docs/index.md)
-    + [Installation](./docs/docs/installation.md)
-    + [Configuration](./docs/docs/configuration.md)
-    + [Basic usage](./docs/docs/basic-usage.md)
-    + [Templates](./docs/docs/templates.md)
-    + [Plugins](./docs/docs/plugins.md)
-    + [FAQ](./docs/docs/faq.md)
+- [Home](https://jacksmith15.github.io/workspace-cli/)
+    + [Installation](https://jacksmith15.github.io/workspace-cli/installation/)
+    + [Configuration](https://jacksmith15.github.io/workspace-cli/configuration/)
+    + [Basic usage](https://jacksmith15.github.io/workspace-cli/basic-usage/)
+    + [Templates](https://jacksmith15.github.io/workspace-cli/templates/)
+    + [Plugins](https://jacksmith15.github.io/workspace-cli/plugins/)
+    + [FAQ](https://jacksmith15.github.io/workspace-cli/faq/)
 
 
 ## Development
