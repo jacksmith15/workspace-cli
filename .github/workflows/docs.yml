@@ -25,4 +25,4 @@ jobs:
         env:
           PYTHONPATH: docs
         run: |
-          poetry run mkdocs gh-deploy --config-file docs/mkdocs.yml
+          poetry run mkdocs gh-deploy --config-file docs/mkdocs.yml --force
