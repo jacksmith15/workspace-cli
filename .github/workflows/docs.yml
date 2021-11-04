@@ -1,36 +1,28 @@
-
-name: tests
-
+name: docs
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-  workflow_dispatch:
 
 jobs:
-  test:
+  publish-docs:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [ '3.8', '3.9' ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.9
           architecture: 'x64'
-
       - name: Install poetry
         run: |
           pip install -U pip
           pip install poetry~=1.1.0
-
       - name: Install dependencies
         run: |
           poetry install
           poetry install -E pipenv -E poetry -E cookiecutter
 
-      - name: Run tests
-        run: poetry run inv verify
+      - name: Build and publish docs
+        env:
+          PYTHONPATH: docs
+        run: |
+          poetry run mkdocs gh-deploy --config-file docs/mkdocs.yml
