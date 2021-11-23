@@ -26,12 +26,12 @@ def list_(specifiers: Tuple[str, ...], output: str = "default"):
     """List projects tracked in the workspace."""
     workspace = Workspace.from_path()
 
+    target_set = set(workspace.projects) if click.get_text_stream("stdin").isatty() else set()
     if specifiers:
         target_set = resolve_specifiers(workspace, specifiers)
-    else:
-        target_set = set(workspace.projects)
 
     if not target_set:
+        theme.echo("<w>No projects selected.</w>")
         sys.exit(0)
 
     for name in sorted(target_set):

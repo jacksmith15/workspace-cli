@@ -35,10 +35,9 @@ def run(specifiers: Tuple[str], command: str, parallel: bool = False):
     """
     workspace = Workspace.from_path()
 
+    target_set = set(workspace.projects) if click.get_text_stream("stdin").isatty() else set()
     if specifiers:
-        target_set = resolve_specifiers(workspace, set(specifiers))
-    else:
-        target_set = set(workspace.projects)
+        target_set = resolve_specifiers(workspace, specifiers)
 
     if not target_set:
         theme.echo("<w>No projects selected.</w>")

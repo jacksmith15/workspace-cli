@@ -13,7 +13,10 @@ Types of changes are:
 * **Fixed** for any bug fixes.
 
 ## [Unreleased]
-
+### Changed
+* `run` and `list` are now no-ops when input is piped to the command, and no arguments are provided. Behaviour when providing regular arguments is unchanged. This makes these commands easier to chain in scripts. E.g.
+  - `workspace reverse | workspace run` will not run any commands
+  - `workspace run` will still run a command in every project
 
 ## [0.1.0] - 2021-11-01
 ### Added

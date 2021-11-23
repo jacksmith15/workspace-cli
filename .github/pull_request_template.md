@@ -6,8 +6,8 @@ _What has changed? This should match `CHANGELOG.md`._
 
 ## Before asking for a review
 
-- [ ] Target branch is `master`
-- [ ] [`[Unreleased]`](../blob/master/CHANGELOG.md#unreleased) section in [CHANGELOG.md](../blob/master/CHANGELOG.md) is updated.
+- [ ] Target branch is `main`
+- [ ] [`[Unreleased]`](../blob/main/CHANGELOG.md#unreleased) section in [CHANGELOG.md](../blob/main/CHANGELOG.md) is updated.
 - [ ] I reviewed the "Files changed" tab and self-annotated anything unexpected.
 
 ## Before review (reviewer)

@@ -83,3 +83,18 @@ Dependencies: []
                 "depends_on": [],
             },
         ]
+
+    @staticmethod
+    def should_have_different_default_behaviour_for_pipes():
+        # GIVEN I have two projects
+        paths = {"libs/my-library", "libs/my-other-library"}
+        for path in paths:
+            run(["workspace", "new", "--type", "poetry", path])
+        # THEN workspace list shows all libs with no args or pipe
+        assert run("workspace list --output names").stdout.splitlines() == ["my-library", "my-other-library"]
+        # AND workspace list shows specified project when provided as arg
+        assert run(["workspace", "list", "--output", "names", "my-library"]).stdout.splitlines() == ["my-library"]
+        # AND workspace list shows specified project when provided via pipe
+        assert run("workspace reverse libs/my-library/foo | workspace list --output names").stdout.splitlines() == ["my-library"]
+        # AND workspace list shows nothing when empty input is provided via pipe
+        assert run("workspace reverse some/path | workspace list --output names").stdout.splitlines() == []

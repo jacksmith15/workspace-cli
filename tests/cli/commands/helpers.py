@@ -1,3 +1,4 @@
+import pty
 import shlex
 import subprocess
 from pathlib import Path
@@ -20,11 +21,14 @@ def run(command: Union[str, List[str]], cwd: Union[Path, str] = WORKSPACE_ROOT, 
             ]
         ).strip()
 
-    if isinstance(command, str):
-        command = shlex.split(command)
+    if isinstance(command, list):
+        command = shlex.join(map(str, command))
+
+    # Ensure stdin looks like a tty, as this affects default argument behaviour
+    _, stdin = pty.openpty()
 
     try:
-        result = subprocess.run(command, check=True, capture_output=True, cwd=cwd, text=True)
+        result = subprocess.run(command, check=True, capture_output=True, cwd=cwd, text=True, shell=True, stdin=stdin)
     except subprocess.CalledProcessError as exc:
         exc.text = format_output(exc.stdout, exc.stderr)  # type: ignore[attr-defined]
         if assert_success:
