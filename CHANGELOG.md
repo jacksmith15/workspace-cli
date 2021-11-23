@@ -13,6 +13,9 @@ Types of changes are:
 * **Fixed** for any bug fixes.
 
 ## [Unreleased]
+
+
+## [0.2.0] - 2021-11-23
 ### Changed
 * `run` and `list` are now no-ops when input is piped to the command, and no arguments are provided. Behaviour when providing regular arguments is unchanged. This makes these commands easier to chain in scripts. E.g.
   - `workspace reverse | workspace run` will not run any commands
@@ -28,7 +31,8 @@ Types of changes are:
   - Use custom templates
   - Add plugins containing custom project type adapters
 
-[Unreleased]: https://github.com/jacksmith15/workspace-cli/compare/0.1.0..HEAD
+[Unreleased]: https://github.com/jacksmith15/workspace-cli/compare/0.2.0..HEAD
+[0.2.0]: https://github.com/jacksmith15/workspace-cli/compare/0.1.0..0.2.0
 [0.1.0]: https://github.com/jacksmith15/workspace-cli/compare/initial..0.1.0
 
 [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
