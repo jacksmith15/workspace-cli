@@ -10,7 +10,7 @@ class TestRemove:
         # WHEN I remove the project
         run(["workspace", "remove", "my-library"])
         # THEN the project should no longer be tracked
-        assert run(["workspace", "list", "--output", "names"]).text == ""
+        assert run(["workspace", "list", "--output", "names"]).stdout == ""
         # AND the project should still exist
         assert (WORKSPACE_ROOT / path).exists()
 
@@ -22,7 +22,7 @@ class TestRemove:
         # WHEN I remove the project
         run(["workspace", "remove", "my-library", "--delete"])
         # THEN the project should no longer be tracked
-        assert run(["workspace", "list", "--output", "names"]).text == ""
+        assert run(["workspace", "list", "--output", "names"]).stdout == ""
         # AND the project should still exist
         assert not (WORKSPACE_ROOT / path).exists()
 
