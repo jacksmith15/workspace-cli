@@ -102,6 +102,7 @@ def update_release_tags() -> str:
             r'^version *= *".*"',
             f'version = "{release_tag}"',
             content,
+            re.MULTILINE,
         ),
     )
     return release_tag
