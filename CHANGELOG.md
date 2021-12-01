@@ -13,7 +13,11 @@ Types of changes are:
 * **Fixed** for any bug fixes.
 
 ## [Unreleased]
+### Added
+* Some automatic template variables can now be included: `workspace_project_path` and `workspace_project_name`.
 
+### Changed
+* `sync` now uses the same no-op logic as `run` and `list` (see [[0.2.0]] below).
 
 ## [0.2.0] - 2021-11-23
 ### Changed
