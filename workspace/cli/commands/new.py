@@ -72,7 +72,7 @@ Available templates are:
         )
 
     try:
-        _initialise_template(workspace, path=path.resolve(), type=type, template=template)
+        _initialise_template(workspace, path=path.resolve(), type=type, name=name, template=template)
         type = type or utils.detect_type(workspace, path.resolve())
         if not type:
             valid_type_list = "\n".join([f"  - <b>{name}</b>" for name in get_adapters()])
@@ -107,10 +107,12 @@ Available types are:
         sys.exit(0)
 
 
-def _initialise_template(workspace: Workspace, path: Path, type: str = None, template: str = None):
+def _initialise_template(workspace: Workspace, path: Path, name: str, type: str = None, template: str = None):
     """Initialise the project directory."""
     if template:
-        workspace.templates.create(template, path)
+        workspace.templates.create(
+            template, path=path, name=name
+        )
     else:
         if not type:
             raise WorkspaceCLIError("<e>Must specify at least one of <b>--type</b> and <b>--template</b> options.</e>")

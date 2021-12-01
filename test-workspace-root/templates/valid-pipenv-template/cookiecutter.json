@@ -2,5 +2,7 @@
     "project_slug": null,
     "project_name": "{{ cookiecutter.project_slug | replace('-', ' ') | title }}",
     "package_name": "{{ cookiecutter.project_slug | replace('-', '_') }}",
-    "python_version": null
+    "python_version": null,
+    "workspace_project_path": null,
+    "workspace_project_name": null
 }

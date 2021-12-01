@@ -45,7 +45,7 @@ class Templates:
         except KeyError:
             return False
 
-    def create(self, template_name: str, path: Path):
+    def create(self, template_name: str, path: Path, name: str):
         try:
             template_path = self[template_name]
         except KeyError:
@@ -56,15 +56,31 @@ class Templates:
             raise WorkspaceTemplateError(
                 "Cookiecutter is not installed - run 'pip install workspace-cli[cookiecutter]'."
             )
+        context = _build_context(template_path, path, self._build_project_context(path, name))
         cookiecutter(
             template=str(template_path),
             output_dir=path.parent,
-            extra_context=_build_context(template_path, path),
+            extra_context=context,
             no_input=True,
         )
 
+    def _build_project_context(self, path: Path, name: str):
+        """These are additional context variables made available in project templates.
 
-def _build_context(template_path: Path, target_directory: Path) -> str:
+        They allow templating the relative path of the project from the workspace root, as
+        well as the project name.
+        """
+        return {
+            "workspace_project_path": str(path.relative_to(self.workspace.path)),
+            "workspace_project_name": name,
+        }
+
+
+def _build_context(
+    template_path: Path,
+    target_directory: Path,
+    default_context: dict,
+) -> dict:
     """Build the cookiecutter context.
 
     We need to combine the target directory and prompt the user for all other fields. By
@@ -83,7 +99,13 @@ def _build_context(template_path: Path, target_directory: Path) -> str:
     context = generate_context(
         context_file=template_path / "cookiecutter.json",
     )
-    extra_context = _prompt_for_config(context, {directory_field: target_directory.name})
+    extra_context = _prompt_for_config(
+        context,
+        {
+            **default_context,
+            **{directory_field: target_directory.name},
+        }
+    )
 
     # Return the rendered context
     return extra_context

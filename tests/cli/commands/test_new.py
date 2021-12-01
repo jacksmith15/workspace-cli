@@ -1,5 +1,7 @@
+import json
 import os
 import subprocess
+from pathlib import Path
 
 import pytest
 
@@ -101,13 +103,20 @@ class TestNew:
                 popen.stdin.flush()
             output = popen.communicate()[0].decode().strip()
             # AND the exit code is 0
-            assert popen.returncode == 0
+            assert popen.returncode == 0, output
 
         # AND the expected message is displayed
         assert output == "Created new project my-library at libs/my-library."
         # AND the project is created with detected type
-        project = Workspace.from_path(WORKSPACE_ROOT)
-        assert project.projects["my-library"].type == "pipenv"
+        workspace = Workspace.from_path(WORKSPACE_ROOT)
+        assert workspace.projects["my-library"].type == "pipenv"
+
+        # AND additional context about the project was available to the template
+        context = json.loads((WORKSPACE_ROOT / "libs/my-library/context.json").read_text())
+        assert context == {
+            "path": "libs/my-library",
+            "name": "my-library",
+        }
 
     @staticmethod
     def should_fail_when_non_existing_template_is_specified():

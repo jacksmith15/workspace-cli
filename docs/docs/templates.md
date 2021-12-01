@@ -43,3 +43,21 @@ Created new project my-new-library at libs/my-new-library.
 ```
 
 > 💡 Ensure cookiecutter is installed with `pip install workspace-cli[cookiecutter]`.
+
+## Default variables
+
+Some additional variables can be automatically made available to project templates:
+
+- `{{ workspace_project_path }}` is the relative path of the project from the workspace root.
+- `{{ workspace_project_name }}` is the name of the project in the workspace.
+
+To make these available, include them in the template's `cookiecutter.json` file, e.g.
+
+```json
+{
+    "workspace_project_path": null,
+    "workspace_project_name": null
+}
+```
+
+> ⚠️ Encoding these in a project creates coupling between the project and the workspace.

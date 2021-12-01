@@ -1,0 +1,4 @@
+{
+    "path": "{{ cookiecutter.workspace_project_path }}",
+    "name": "{{ cookiecutter.workspace_project_name }}"
+}
