@@ -13,6 +13,9 @@ Types of changes are:
 * **Fixed** for any bug fixes.
 
 ## [Unreleased]
+
+
+## [0.3.0] - 2021-12-02
 ### Added
 * Some automatic template variables can now be included: `workspace_project_path` and `workspace_project_name`.
 
@@ -35,7 +38,8 @@ Types of changes are:
   - Use custom templates
   - Add plugins containing custom project type adapters
 
-[Unreleased]: https://github.com/jacksmith15/workspace-cli/compare/0.2.0..HEAD
+[Unreleased]: https://github.com/jacksmith15/workspace-cli/compare/0.3.0..HEAD
+[0.3.0]: https://github.com/jacksmith15/workspace-cli/compare/0.2.0..0.3.0
 [0.2.0]: https://github.com/jacksmith15/workspace-cli/compare/0.1.0..0.2.0
 [0.1.0]: https://github.com/jacksmith15/workspace-cli/compare/initial..0.1.0
 
