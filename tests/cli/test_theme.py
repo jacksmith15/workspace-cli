@@ -1,5 +1,3 @@
-import pytest
-
 from workspace.cli.theme import colorize, escape, strip_tags, unescape
 
 
