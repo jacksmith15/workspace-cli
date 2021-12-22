@@ -17,7 +17,23 @@ class Colors:
     red = 167
 
 
-def echo(message=None, file=None, nl=True, err=True, color=None, rewrite=False):
+def echo(message: str, *args, file=None, nl=True, err=True, color=None, rewrite=False):
+    """Wrapper around `click.echo` which allows tag-based styling.
+
+    Supports %-style string formatting to escape text from external sources (whose 'tags'
+    should not be parsed).
+
+    Available tags are:
+    - <header>
+    - <success>
+    - <accent>
+    - <warning>
+    - <error>
+    - <bold>
+    """
+    if args:
+        args = tuple([escape(arg) for arg in args])
+        message = message % args
     message = colorize(message)
     if rewrite:
         message = _CLEAR + message
@@ -25,14 +41,38 @@ def echo(message=None, file=None, nl=True, err=True, color=None, rewrite=False):
 
 
 def colorize(message: str) -> str:
-    return "".join([token for token in _tokenize(message)])
+    return unescape("".join([token for token in _tokenize(message)]))
 
 
 def strip_tags(message: str) -> str:
-    return "".join([token for token in _tokenize(message, strip_tags=True)])
+    return unescape("".join([token for token in _tokenize(message, strip_tags=True)]))
+
+
+def escape(message: str) -> str:
+    """Escape tags which might be interpreted by the theme tokenizer.
+
+    Should be used when passing text from external sources to `theme.echo`.
+    """
+    return re.sub(
+        r"<(/?[A-Za-z_-])>",
+        r"\<\1>",
+        message,
+    )
+
+
+def unescape(message: str) -> str:
+    return re.sub(
+        r"\\<(/?[A-Za-z_-])>",
+        r"<\1>",
+        message,
+    )
 
 
 def _tokenize(string: str, strip_tags: bool = False):
+    """Tokenizer for easy CLI theme tokenizer.
+
+    Parses HTML-inspired tags to describe the text style.
+    """
     style_tags = {
         "header": Colors.turquoise,
         "success": Colors.green,
@@ -41,8 +81,8 @@ def _tokenize(string: str, strip_tags: bool = False):
         "error": Colors.red,
     }
     tokens = {
-        "TAGOPEN": r"<[A-Za-z_-]+>",
-        "TAGCLOSE": r"</[(A-Za-z_-]+>",
+        "TAGOPEN": r"(?<!\\)<[A-Za-z_-]+>",
+        "TAGCLOSE": r"(?<!\\)</[(A-Za-z_-]+>",
         "DEFAULT": r".",
     }
     token_regex = "|".join(f"(?P<{name}>{regex})" for name, regex in tokens.items())
@@ -101,7 +141,7 @@ def _color_code(number: int):
 
 def demo_theme():
     echo(
-        """<h><b>This is a header</b></h>
+        f"""<h><b>This is a header</b></h>
 
 This is some regular text, with <a>accented</a> parts.
 
@@ -111,6 +151,7 @@ Let's draw attention to the <s>good</s> things.
 
 <e>Something here has gone <b>very wrong</b>!</e>
 
+{escape("Raw <b>text</b> can be escaped.")}
 """
     )  # pragma: no cover
 

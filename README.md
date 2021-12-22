@@ -22,7 +22,7 @@ Install dependencies:
 ```shell
 pyenv shell 3.8.6  # Or other version >= 3.8
 pre-commit install  # Configure commit hooks
-poetry install  # Install Python dependencies
+poetry install -E poetry -E pipenv -E cookiecutter  # Install Python dependencies
 ```
 
 Run tests:

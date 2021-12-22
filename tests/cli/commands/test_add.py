@@ -56,7 +56,7 @@ class TestAdd:
         # THEN the exit code is 1
         assert exc.returncode == 1, exc.text
         # AND the expected error message is displayed
-        assert exc.text.startswith("No adapter of type 'notatype' registered.")
+        assert exc.text.startswith("No adapter of type 'notatype' registered."), exc.text
 
     @staticmethod
     def should_fail_when_type_is_unspecified_and_undetectable():
