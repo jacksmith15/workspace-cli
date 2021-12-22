@@ -13,6 +13,8 @@ Types of changes are:
 * **Fixed** for any bug fixes.
 
 ## [Unreleased]
+### Fixed
+* Removed extra period in an error message.
 
 
 ## [0.3.0] - 2021-12-02
