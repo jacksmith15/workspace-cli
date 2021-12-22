@@ -60,6 +60,5 @@ Raw <b>text</b> can be escaped.
         )
 
     @staticmethod
-    def should_fail_for_unknown_token():
-        with pytest.raises(AssertionError):
-            colorize("<foo>bar</foo>")
+    def should_ignore_unknown_token():
+        assert colorize("<foo>bar</foo>") == "<foo>bar</foo>\x1b[0m"

@@ -17,6 +17,22 @@ class Colors:
     red = 167
 
 
+def _color_code(number: int):
+    assert number < 256
+    return f"\x1b[38;5;{number}m"
+
+
+TAGS = {
+    "header": _color_code(Colors.turquoise),
+    "success": _color_code(Colors.green),
+    "accent": _color_code(Colors.purple),
+    "warning": _color_code(Colors.yellow),
+    "error": _color_code(Colors.red),
+    "bold": _BOLD,
+}
+TAG_RE = "(" + "|".join([tag for tag in TAGS] + [tag[0] for tag in TAGS]) + ")"
+
+
 def echo(message: str, *args, file=None, nl=True, err=True, color=None, rewrite=False):
     """Wrapper around `click.echo` which allows tag-based styling.
 
@@ -24,12 +40,12 @@ def echo(message: str, *args, file=None, nl=True, err=True, color=None, rewrite=
     should not be parsed).
 
     Available tags are:
-    - <header>
-    - <success>
-    - <accent>
-    - <warning>
-    - <error>
-    - <bold>
+    - <header> or <h>
+    - <success> or <s>
+    - <accent> or <a>
+    - <warning> or <w>
+    - <error> or <e>
+    - <bold> or <b>
     """
     if args:
         args = tuple([escape(arg) for arg in args])
@@ -54,7 +70,7 @@ def escape(message: str) -> str:
     Should be used when passing text from external sources to `theme.echo`.
     """
     return re.sub(
-        r"<(/?[A-Za-z_-])>",
+        rf"<(/?{TAG_RE})>",
         r"\<\1>",
         message,
     )
@@ -62,7 +78,7 @@ def escape(message: str) -> str:
 
 def unescape(message: str) -> str:
     return re.sub(
-        r"\\<(/?[A-Za-z_-])>",
+        rf"\\<(/?{TAG_RE})>",
         r"<\1>",
         message,
     )
@@ -73,35 +89,27 @@ def _tokenize(string: str, strip_tags: bool = False):
 
     Parses HTML-inspired tags to describe the text style.
     """
-    style_tags = {
-        "header": Colors.turquoise,
-        "success": Colors.green,
-        "accent": Colors.purple,
-        "warning": Colors.yellow,
-        "error": Colors.red,
-    }
     tokens = {
-        "TAGOPEN": r"(?<!\\)<[A-Za-z_-]+>",
-        "TAGCLOSE": r"(?<!\\)</[(A-Za-z_-]+>",
+        "TAGOPEN": rf"(?<!\\)<{TAG_RE}>",
+        "TAGCLOSE": rf"(?<!\\)</{TAG_RE}>",
         "DEFAULT": r".",
     }
     token_regex = "|".join(f"(?P<{name}>{regex})" for name, regex in tokens.items())
     stack: List[str] = []
 
     def parse_tag(tag: str):
-        tags = set(style_tags) | {"bold"}
-        if tag in tags:
+        if tag in TAGS:
             return tag
-        for full_tag in tags:
+        for full_tag in TAGS:
             if full_tag.startswith(tag):
                 return full_tag
 
     def reset_code():
-        style = next((tag for tag in reversed(stack) if tag in style_tags), None)
+        style = next((tag for tag in reversed(stack) if tag != "bold"), None)
         bold = "bold" in stack
         result = _RESET
         if style:
-            result = result + _color_code(style_tags[style])
+            result = result + TAGS[style]
         if bold:
             result = result + _BOLD
         return result
@@ -113,18 +121,20 @@ def _tokenize(string: str, strip_tags: bool = False):
             if strip_tags:
                 continue
             tag = parse_tag(token[1:-1])
-            if tag == "bold":
-                yield _BOLD
-            elif tag in style_tags:
-                yield _color_code(style_tags[tag])
-            else:
-                assert False, f"Unknown token {token}"
+            try:
+                yield TAGS[tag]
+            except KeyError:
+                # Unknown tag - unlikely but would mean an error in TAG_RE
+                yield token
+                continue
             stack.append(tag)
         elif kind == "TAGCLOSE":
             if strip_tags:
                 continue
             tag = parse_tag(token[2:-1])
-            assert stack and (stack[-1] == tag), f"Invalid closing tag {token}"
+            if not stack or stack[-1] != tag:
+                yield token
+                continue
             stack.pop()
             yield reset_code()
         else:
@@ -132,11 +142,6 @@ def _tokenize(string: str, strip_tags: bool = False):
     stack.clear()
     if not strip_tags:
         yield reset_code()
-
-
-def _color_code(number: int):
-    assert number < 256
-    return f"\x1b[38;5;{number}m"
 
 
 def demo_theme():
@@ -150,6 +155,8 @@ Let's draw attention to the <s>good</s> things.
 <w>This is something to <b>watch out</b> for!</w>
 
 <e>Something here has gone <b>very wrong</b>!</e>
+
+<Unknown> tags are ignored.
 
 {escape("Raw <b>text</b> can be escaped.")}
 """
