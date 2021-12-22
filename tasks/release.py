@@ -99,10 +99,11 @@ def update_release_tags() -> str:
     update_file(
         "pyproject.toml",
         lambda content: re.sub(
-            r'version *= *".*"',
-            f'version = "{release_tag}"',
+            r'\nversion *= *".*"',
+            f'\nversion = "{release_tag}"',
             content,
-            re.MULTILINE,
+            count=1,
+            flags=re.MULTILINE,
         ),
     )
     return release_tag
