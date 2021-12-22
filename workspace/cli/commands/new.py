@@ -63,7 +63,7 @@ Specify a different name with:
     if template and template not in workspace.templates:
         template_list = "\n".join([f"  - <a>{path.name}</a>" for path in workspace.templates])
         raise WorkspaceCLIError(
-            f"""<e>Unknown template <b>{template}</b>.</e>.
+            f"""<e>Unknown template <b>{template}</b>.</e>
 
 Available templates are:
 {template_list}
