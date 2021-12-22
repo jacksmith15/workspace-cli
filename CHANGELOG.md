@@ -15,7 +15,7 @@ Types of changes are:
 ## [Unreleased]
 ### Fixed
 * Removed extra period in an error message.
-
+* Don't attempt to parse subprocess output according to theme. Add helpers for escaping text before formatting.
 
 ## [0.3.0] - 2021-12-02
 ### Added

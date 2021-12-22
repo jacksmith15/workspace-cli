@@ -37,5 +37,5 @@ def run_cli():
         theme.echo(exc.display)
         sys.exit(exc.exit_code)
     except WorkspaceBaseError as exc:
-        theme.echo(f"<e>{exc}</e>")
+        theme.echo(f"<e>{theme.escape(str(exc))}</e>")
         sys.exit(1)

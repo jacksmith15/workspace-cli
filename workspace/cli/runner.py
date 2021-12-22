@@ -2,6 +2,8 @@ import time
 from itertools import cycle
 from typing import Dict, Iterable, List, NamedTuple, Tuple
 
+import click
+
 from workspace.cli import theme
 from workspace.core.models import Project
 
@@ -71,7 +73,7 @@ def _run_in_parallel(project_commands: List[Tuple[Project, str]]) -> int:
     for name, result in complete.items():
         if not result.success:
             theme.echo(f"<e><b>{name}</b> failed with exit code <b>{exit_code}</b></e>:")
-            theme.echo(result.output)
+            click.echo(result.output)  # Don't try to format subprocess output
 
     return _get_exit_code({result.exit_code for result in complete.values()})
 
