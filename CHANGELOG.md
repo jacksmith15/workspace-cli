@@ -13,6 +13,9 @@ Types of changes are:
 * **Fixed** for any bug fixes.
 
 ## [Unreleased]
+
+
+## [0.3.1] - 2021-12-22
 ### Fixed
 * Removed extra period in an error message.
 * Don't attempt to parse subprocess output according to theme. Add helpers for escaping text before formatting.
@@ -40,7 +43,8 @@ Types of changes are:
   - Use custom templates
   - Add plugins containing custom project type adapters
 
-[Unreleased]: https://github.com/jacksmith15/workspace-cli/compare/0.3.0..HEAD
+[Unreleased]: https://github.com/jacksmith15/workspace-cli/compare/0.3.1..HEAD
+[0.3.1]: https://github.com/jacksmith15/workspace-cli/compare/0.3.0..0.3.1
 [0.3.0]: https://github.com/jacksmith15/workspace-cli/compare/0.2.0..0.3.0
 [0.2.0]: https://github.com/jacksmith15/workspace-cli/compare/0.1.0..0.2.0
 [0.1.0]: https://github.com/jacksmith15/workspace-cli/compare/initial..0.1.0

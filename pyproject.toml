@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "workspace-cli"
-version = "0.3.0"
+version = "0.3.1"
 description = "Manage interdependent projects in a workspace."
 authors = ["Jack Smith"]
 packages = [
