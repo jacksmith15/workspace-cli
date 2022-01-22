@@ -664,7 +664,7 @@ python-versions = "*"
 
 [[package]]
 name = "pipenv"
-version = "2021.11.23"
+version = "2022.1.8"
 description = "Python Development Workflow for Humans."
 category = "main"
 optional = true
@@ -1161,7 +1161,7 @@ poetry = ["poetry"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "5d86c84e65e2cde40bdf8c0e6c52e29aad7f7c8149666a6b171840bf31394c0a"
+content-hash = "2c44d3a4c68259293aa699b5387430068ece8eab8b64802e97f8562d9e07ba50"
 
 [metadata.files]
 appnope = [
@@ -1616,8 +1616,8 @@ pickleshare = [
     {file = "pickleshare-0.7.5.tar.gz", hash = "sha256:87683d47965c1da65cdacaf31c8441d12b8044cdec9aca500cd78fc2c683afca"},
 ]
 pipenv = [
-    {file = "pipenv-2021.11.23-py2.py3-none-any.whl", hash = "sha256:10ee98b58399e9bace042f3dc9644fdfc9f1a27f0a17a03642b7d24e533ee0ac"},
-    {file = "pipenv-2021.11.23.tar.gz", hash = "sha256:1bde859e8bbd1d21d503fd995bc0170048d6da7686ab885f074592c99a16e8f3"},
+    {file = "pipenv-2022.1.8-py2.py3-none-any.whl", hash = "sha256:3b80b4512934b9d8e8ce12c988394642ff96bb697680e5b092e59af503178327"},
+    {file = "pipenv-2022.1.8.tar.gz", hash = "sha256:f84d7119239b22ab2ac2b8fbc7d619d83cf41135206d72a17c4f151cda529fd0"},
 ]
 pkginfo = [
     {file = "pkginfo-1.8.2-py2.py3-none-any.whl", hash = "sha256:c24c487c6a7f72c66e816ab1796b96ac6c3d14d49338293d2141664330b55ffc"},
