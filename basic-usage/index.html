@@ -1,0 +1,803 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>Basic usage - Workspace</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/termynal.css">
+    
+      <link rel="stylesheet" href="../css/overrides.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#basic-usage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Workspace" class="md-header__button md-logo" aria-label="Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Workspace
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Basic usage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/jacksmith15/workspace-cli/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jacksmith15/workspace-cli
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Workspace" class="md-nav__button md-logo" aria-label="Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Workspace
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/jacksmith15/workspace-cli/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jacksmith15/workspace-cli
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Basic usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Basic usage
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#start-a-new-workspace" class="md-nav__link">
+    Start a new workspace
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#managing-projects" class="md-nav__link">
+    Managing projects
+  </a>
+  
+    <nav class="md-nav" aria-label="Managing projects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-project-from-scratch" class="md-nav__link">
+    Creating a project from scratch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-an-existing-project" class="md-nav__link">
+    Adding an existing project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-a-project" class="md-nav__link">
+    Removing a project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listing-projects" class="md-nav__link">
+    Listing projects
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-environments" class="md-nav__link">
+    Project environments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-commands" class="md-nav__link">
+    Running commands
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependency-inference" class="md-nav__link">
+    Dependency inference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-types" class="md-nav__link">
+    Project types
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates/" class="md-nav__link">
+        Templates
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        Plugins
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#start-a-new-workspace" class="md-nav__link">
+    Start a new workspace
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#managing-projects" class="md-nav__link">
+    Managing projects
+  </a>
+  
+    <nav class="md-nav" aria-label="Managing projects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-project-from-scratch" class="md-nav__link">
+    Creating a project from scratch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-an-existing-project" class="md-nav__link">
+    Adding an existing project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-a-project" class="md-nav__link">
+    Removing a project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listing-projects" class="md-nav__link">
+    Listing projects
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-environments" class="md-nav__link">
+    Project environments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-commands" class="md-nav__link">
+    Running commands
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependency-inference" class="md-nav__link">
+    Dependency inference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-types" class="md-nav__link">
+    Project types
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/jacksmith15/workspace-cli/edit/master/docs/basic-usage.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="basic-usage">Basic usage<a class="headerlink" href="#basic-usage" title="Permanent link">&para;</a></h1>
+<h2 id="start-a-new-workspace">Start a new workspace<a class="headerlink" href="#start-a-new-workspace" title="Permanent link">&para;</a></h2>
+<p>You can create a new workspace in the current working directory:</p>
+<p>
+<div id="termynal-0" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace init</span>
+    <span data-ty>Created workspace at /current/working/directory.</span>
+</div>
+</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>You can also specify the path to the workspace using the <code>--path</code> option.</p>
+</div>
+<p>This creates a file called <code>workspace.json</code>, which contains metadata about the workspace. This file marks the root directory of the workspace.</p>
+<p>When detecting the active workspace, the CLI looks for a <code>workspace.json</code> file in the current directory first, followed by its parents.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>To display the current workspace path, run <code>workspace info</code>.</p>
+</div>
+<h2 id="managing-projects">Managing projects<a class="headerlink" href="#managing-projects" title="Permanent link">&para;</a></h2>
+<h3 id="creating-a-project-from-scratch">Creating a project from scratch<a class="headerlink" href="#creating-a-project-from-scratch" title="Permanent link">&para;</a></h3>
+<p>A workspace contains one or more projects. You can create a new project with <code>workspace new</code>:</p>
+<p>
+<div id="termynal-1" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace new --type poetry libs/library-one</span>
+    <span data-ty>Created new project library-one at libs/library-one.</span>
+</div>
+</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This creates a <a href="https://python-poetry.org/">Poetry</a> project at the specified path. For other types of project, see <a href="#project-types">Project types</a> below.</p>
+</div>
+<p>We can check this project exists by listing all projects in the workspace:</p>
+<p>
+<div id="termynal-2" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace list</span>
+    <span data-ty></span>
+    <span data-ty>Name: library-one</span>
+    <span data-ty>Type: poetry</span>
+    <span data-ty>Path: /path/to/workspace/libs/library-one</span>
+    <span data-ty>Dependencies: []</span>
+</div>
+</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The name above was auto-generated from the directory name of the project. To specify a custom name, pass the <code>--name</code> flag to <code>workspace new</code> or <code>workspace add</code>.</p>
+</div>
+<h3 id="adding-an-existing-project">Adding an existing project<a class="headerlink" href="#adding-an-existing-project" title="Permanent link">&para;</a></h3>
+<p>If you already have an existing project, add it to be tracked by the workspace:</p>
+<p>
+<div id="termynal-3" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace add libs/library-two</span>
+    <span data-ty>Added new project library-two at libs/library-two.</span>
+</div>
+</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>We didn't specify <code>--type</code> here, because the CLI will attempt to automatically detect from the available <a href="#project-types">types</a>. If the wrong type is detected, you can specify this explicitly.</p>
+</div>
+<h3 id="removing-a-project">Removing a project<a class="headerlink" href="#removing-a-project" title="Permanent link">&para;</a></h3>
+<p>To stop tracking a workspace:</p>
+<p>
+<div id="termynal-4" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace remove library-one</span>
+    <span data-ty>Stopped tracking projects:</span>
+    <span data-ty>  - library-one</span>
+</div>
+</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This will <strong>not</strong> delete anything by default. To delete the project directory, pass the <code>--delete</code> flag.</p>
+</div>
+<h3 id="listing-projects">Listing projects<a class="headerlink" href="#listing-projects" title="Permanent link">&para;</a></h3>
+<p>To show information about all projects, use <code>workspace list</code>:</p>
+<p>
+<div id="termynal-5" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace list</span>
+    <span data-ty></span>
+    <span data-ty>Name: library-one</span>
+    <span data-ty>Type: poetry</span>
+    <span data-ty>Path: /path/to/workspace/libs/library-one</span>
+    <span data-ty>Dependencies: []</span>
+    <span data-ty></span>
+    <span data-ty>Name: library-two</span>
+    <span data-ty>Type: poetry</span>
+    <span data-ty>Path: /path/to/workspace/libs/library-two</span>
+    <span data-ty>Dependencies: []</span>
+</div>
+</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This command (and others) support alternative output formats, including json. Run <code>workspace list --help</code> for more information.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can pass or pipe project names (or globbed names) to list a subset of projects. This can be combined with other commands which only output project names, to show more information about them.</p>
+</div>
+<h2 id="project-environments">Project environments<a class="headerlink" href="#project-environments" title="Permanent link">&para;</a></h2>
+<p>Each project will have some environment, containing their dependencies. You can synchronise those environments for all projects at once, using:</p>
+<p>
+<div id="termynal-6" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace sync --dev --parallel</span>
+    <span data-ty>Running poetry install</span>
+    <span data-ty></span>
+    <span data-ty>✔ library-two (0.8s)</span>
+    <span data-ty>✔ library-one (0.8s)</span>
+</div>
+</p>
+<p>In the case of <a href="https://python-poetry.org/">Poetry</a> projects, this runs <code>poetry install</code> to prepare each project's <a href="https://docs.python.org/3/tutorial/venv.html">virtual environment</a>. Other <a href="#project-types">project types</a> will perform other tasks.</p>
+<h2 id="running-commands">Running commands<a class="headerlink" href="#running-commands" title="Permanent link">&para;</a></h2>
+<p>Arbitrary commands can be run in every tracked project in parallel, ensuring that each uses their respective environments:</p>
+<p>
+<div id="termynal-7" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace run -c 'pytest' --parallel</span>
+    <span data-ty></span>
+    <span data-ty>Running pytest</span>
+    <span data-ty></span>
+    <span data-ty>✔ library-two (0.5s)</span>
+    <span data-ty>✔ library-one (0.6s)</span>
+</div>
+</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The above command runs tests in parallel, which will only write command output if a command fails. To see the output of each command, omit the <code>--parallel</code> flag.</p>
+</div>
+<p>To run commands in specific projects, provide their names as positional arguments:</p>
+<p>
+<div id="termynal-8" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace run -c 'pytest' library-one library-two</span>
+</div>
+</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p><code>workspace run</code> supports piping a list of target project names, as well globbed names, for example:</p>
+<div class="highlight"><pre><span></span><code>echo &quot;library-*&quot; | workspace run -c &#39;pytest&#39;
+</code></pre></div>
+</div>
+<h2 id="dependency-inference">Dependency inference<a class="headerlink" href="#dependency-inference" title="Permanent link">&para;</a></h2>
+<p>Projects in a workspace will often depend on each other. This can be inspected with the appropriate commands:</p>
+<p>
+<div id="termynal-9" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace dependencies library-two</span>
+    <span data-ty>library-two</span>
+    <span data-ty>library-one</span>
+</div>
+</p>
+<p>
+<div id="termynal-10" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace dependees library-one</span>
+    <span data-ty>library-one</span>
+    <span data-ty>library-two</span>
+</div>
+</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Both of the above commands will traverse all transitive dependencies. To show only direct dependencies or dependees, pass the <code>--no-transitive</code> flag.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Pass multiple inputs to output the union of results. As with <code>run</code>, piped and globbed arguments can be used.</p>
+</div>
+<p>To identify which project a particular file belongs to, use <code>workspace reverse</code>:</p>
+<p>
+<div id="termynal-11" data-termynal class="termynal" data-ty-startDelay=600 data-ty-typeDelay=90 data-ty-lineDelay=1500 data-ty-cursor=▋>
+    <span data-ty="input">workspace reverse libs/library-one/pyproject.toml</span>
+    <span data-ty>library-one</span>
+</div>
+</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Combine <code>run</code>, <code>dependees</code> and <code>reverse</code> to run tests on only the affected projects of a git diff:</p>
+<div class="highlight"><pre><span></span><code>git --no-pager diff --name-only |\
+
+    workspace reverse |\
+
+    workspace dependees |\
+
+    workspace run -c &#39;pytest&#39;
+</code></pre></div>
+</div>
+<h2 id="project-types">Project types<a class="headerlink" href="#project-types" title="Permanent link">&para;</a></h2>
+<p>Every project in a workspace has a "type", which defines how the CLI interacts with that project and its environment. By default, two types are supported <a href="https://python-poetry.org/">Poetry</a> and <a href="https://pipenv-fork.readthedocs.io/en/latest/">Pipenv</a>, both of which manage Python project environments.</p>
+<p>Additional types can be added via <a href="../plugins/">plugins</a>.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../configuration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configuration" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Configuration
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../templates/" class="md-footer__link md-footer__link--next" aria-label="Next: Templates" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Templates
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+    
+  </body>
+</html>
